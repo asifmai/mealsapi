@@ -1,0 +1,71 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  background-color: rgb(37, 50, 83);
+  font-family: "Roboto", sans-serif;
+}
+table.table-striped {
+  margin-bottom: 0;
+  background-color: white;
+}
+.table-striped tr {
+  height: 3em;
+}
+.top-heading .date {
+  background-color: white;
+  color: rgb(37, 50, 83);
+}
+.top-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-top: 4em; */
+  margin-bottom: -3.5em;
+}
+/* TABLE 1 */
+.orange-row {
+  background-color: rgb(242, 128, 91);
+}
+.week-time-table {
+  border: 1em solid rgb(242, 128, 91);
+  border-bottom: none;
+}
+.week-time-table .orange.table tr {
+  border-top: 2px solid rgba(242, 128, 91, 0.4);
+}
+/* TABLE 2 */
+.green-row {
+  background-color: rgb(79, 181, 171);
+}
+.week-time-table-2 {
+  border: 1em solid rgb(79, 181, 171);
+  border-bottom: none;
+}
+.week-time-table-2 .green.table tr {
+  border-top: 2px solid rgba(79, 181, 171, 0.4);
+}
+/* TABLE 3 */
+.yellow-row {
+  background-color: rgb(232, 152, 34);
+}
+.week-time-table-3 {
+  border: 1em solid rgb(232, 152, 34);
+  border-bottom: 5em solid rgb(232, 152, 34);
+  border-top: 3em solid rgb(232, 152, 34);
+}
+.week-time-table-3 .yellow.table tr {
+  border-top: 2px solid rgba(232, 152, 34, 0.4);
+}
+.yellow-head {
+  height: 3.5em;
+  background-color: rgb(232, 152, 34);
+}
+
+.targetSection {
+  position: fixed;
+  width: 200px;
+  left: 13%;
+  top: 20.7%;
+  height: 500px;
+}

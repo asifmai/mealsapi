@@ -1,0 +1,28 @@
+body {
+  padding: 50px 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.aboutFP{
+  font-size: smaller;
+  color: grey;
+}
+
+.mealHeading{
+  font-weight: bold !important;
+}
+
+.form-signin .btn{
+  width: 50%;
+  display: inline;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+

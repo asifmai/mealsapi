@@ -3,6 +3,14 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
+  firstName: {
+    type: String,
+    default: '',
+  },
+  lastName: {
+    type: String,
+    default: '',
+  },
   email: {
     type: String,
     required: true,
@@ -21,6 +29,11 @@ const UserSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Profile',
   },
+  role: {
+    type: String,
+    default: 'user',
+    required: true,
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);

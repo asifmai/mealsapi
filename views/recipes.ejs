@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('partials/commonhead.ejs') %>
+  </head>
+
+  <body>
+    <div class="body-wrapper">
+      <%- include ('partials/navbar.ejs') %>
+      <main class="pt-5 mx-lg-5">
+        <div class="container-fluild mt-5">
+          <div class="card mb-4">
+            <!--Card content-->
+            <div class="card-body d-sm-flex justify-content-between">
+              <a
+                href=""
+                data-toggle="modal"
+                data-target="#modalLoginForm"
+                class="btn btn-primary ml-auto"
+                type="submit"
+              >
+                Add Recipe
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <!--Card-->
+              <div class="card">
+                <!--Card content-->
+                <div class="card-body">
+                  <!-- Table  -->
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-hover">
+                      <col width="5%" />
+                      <col width="5%" />
+                      <col width="15%" />
+                      <col width="10%" />
+                      <col width="40%" />
+                      <!-- Table head -->
+                      <thead class="blue-grey lighten-4">
+                        <tr>
+                          <th>S#</th>
+                          <th>Name</th>
+                          <th>Unit</th>
+                          <th>Type</th>
+                          <th>Fats</th>
+                          <th>Carbs</th>
+                          <th>Proteins</th>
+                          <th>Net Carbs</th>
+                          <th>Calories</th>
+                          <th>Servings</th>
+                          <th>Diet</th>
+
+                          <th>CreatedAt</th>
+                          <th class="text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <!-- Table head -->
+                      <!-- Table body -->
+                      <tbody>
+                        <% for(var i=0; i< recipes.length; i++) {%>
+                        <tr>
+                          <th scope="row"><%= i+1 %></th>
+                          <td><%= recipes[i].name %></td>
+                          <td><%= recipes[i].unit %></td>
+                          <td><%= recipes[i].type %></td>
+                          <td><%= recipes[i].fats %></td>
+                          <td><%= recipes[i].carbs%></td>
+                          <td><%= recipes[i].proteins %></td>
+                          <td><%= recipes[i].netcarbs %></td>
+                          <td><%= recipes[i].calories%></td>
+                          <td><%= recipes[i].servings %></td>
+                          <td><%= recipes[i].diet %></td>
+
+                          <td class="createdAt"><%= recipes[i].createdAt %></td>
+                          <td class="text-center">
+                            <a
+                              href="#"
+                              article-title="<%= recipes[i].name %>"
+                              article-unit="<%= recipes[i].unit %>"
+                              article-type="<%= recipes[i].type %>"
+                              article-fats="<%= recipes[i].fats%>"
+                              article-carbs="<%= recipes[i].carbs%>"
+                              article-netcarbs="<%= recipes[i].netcarbs %>"
+                              article-proteins="<%= recipes[i].proteins %>"
+                              article-calories="<%= recipes[i].calories %>"
+                              article-servings="<%= recipes[i].servings %>"
+                              article-diet="<%= recipes[i].diet %>"
+                              article-id="<%= recipes[i].id %>"
+                              article-recipeID="<%= recipes[i].recipeID %>"
+                              class="btn btn-green btn-md waves-effect waves-light mr-3 btn-edit"
+                              data-toggle="modal"
+                              data-target="#modalupdateForm"
+                              ><i class="far fa-edit"></i
+                            ></a>
+                            <a
+                              href="/dashboard/deleterecipe/<%= recipes[i].id %>"
+                              class="btn btn-danger btn-md waves-effect waves-light btn-delete"
+                              ><i class="far fa-trash-alt"></i
+                            ></a>
+                          </td>
+                        </tr>
+                        <% } %>
+                      </tbody>
+                      <!-- Table body -->
+                    </table>
+                  </div>
+                  <!-- Table  -->
+                </div>
+              </div>
+              <!--/.Card-->
+            </div>
+          </div>
+          <!-- Central Modal Medium Info -->
+          <form
+            action="/dashboard/addrecipe"
+            method="post"
+            encType="multipart/form-data"
+          >
+            <div
+              class="modal fade"
+              id="modalLoginForm"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="myModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">
+                      Add Recipe
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body mx-5">
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="name"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Name</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="unit"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Unit</label>
+                    </div>
+
+                    <div class="md-form mb-5">
+                      <select class="browser-default custom-select" name="type">
+                        <option value="" disabled selected
+                          >Choose Recipe Type</option
+                        >
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                      </select>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="fats"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Fats</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="carbs"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Carbs</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="netcarbs"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Net Carbs</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="proteins"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Proteins</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="calories"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Calories</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="servings"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Servings</label>
+                    </div>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="diet"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                      <label for="form-autocomplete" class="">Diet</label>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <form
+            action="/dashboard/editrecipe"
+            method="post"
+            encType="multipart/form-data"
+          >
+            <div
+              class="modal fade"
+              id="modalupdateForm"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="myModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">
+                      Update Recipe
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body mx-5">
+                    <input
+                      hidden
+                      type="text"
+                      name="id"
+                      id="form-autocomplete"
+                      class="form-control mdb-autocomplete"
+                      required
+                    />
+
+                    <label for="form-autocomplete" class="">Name</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="name"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+
+                    <label for="form-autocomplete" class="">Unit</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="unit"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+
+                    <label for="form-autocomplete" class="">Type</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="type"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Fats</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="fats"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Carbs</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="carbs"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Net Carbs</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="netcarbs"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Proteins</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="proteins"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Calories</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="calories"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Diet</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="text"
+                        name="diet"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                    <label for="form-autocomplete" class="">Servings</label>
+                    <div class="md-form mb-5">
+                      <input
+                        type="number"
+                        name="servings"
+                        id="form-autocomplete"
+                        class="form-control mdb-autocomplete"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- Central Modal Medium Info-->
+        </div>
+      </main>
+    </div>
+
+    <%- include ('partials/commonscripts.ejs') %>
+
+    <script>
+      $(document).ready(function () {
+        ClassicEditor.create(document.querySelector("#editor"))
+          .then((editor) => {
+            var editor1 = editor;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
+        var editor2 = null;
+        ClassicEditor.create(document.querySelector("#editeditor"))
+          .then((editor) => {
+            editor2 = editor;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        $("td.createdAt").each(function (index, element) {
+          var dt = $(element).text();
+          var newdt = moment(dt).format("MM-DD-YY HH:mm");
+          $(element).text(newdt);
+        });
+
+        $(".btn-edit").click(function (e) {
+          e.preventDefault();
+          console.log(ClassicEditor.instances);
+
+          var eventId = $(this).attr("article-id");
+          var eventrecipeId = $(this).attr("article-recipeID");
+          var eventType = $(this).attr("article-type");
+          var eventTitle = $(this).attr("article-title");
+          var eventFats = $(this).attr("article-fats");
+          var eventCarbs = $(this).attr("article-carbs");
+          var eventNetCarbs = $(this).attr("article-netcarbs");
+          var eventProteins = $(this).attr("article-proteins");
+          var eventServings = $(this).attr("article-servings");
+          var eventDiet = $(this).attr("article-diet");
+          var eventCalories = $(this).attr("article-calories");
+          var eventProteins = $(this).attr("article-proteins");
+          var eventUnit = $(this).attr("article-unit");
+
+          // INGREDIENTS var eventServings = $(this).attr('article-servings');
+
+          $('#modalupdateForm input[name="id"]').val(eventId);
+          $('#modalupdateForm input[name="recipeID"]').val(eventrecipeId);
+          $('#modalupdateForm input[name="name"]').val(eventTitle);
+          $('#modalupdateForm input[name="unit"]').val(eventUnit);
+          $('#modalupdateForm input[name="type"]').val(eventType);
+          $('#modalupdateForm input[name="fats"]').val(eventFats);
+          $('#modalupdateForm input[name="carbs"]').val(eventCarbs);
+          $('#modalupdateForm input[name="netcarbs"]').val(eventNetCarbs);
+          $('#modalupdateForm input[name="proteins"]').val(eventProteins);
+          $('#modalupdateForm input[name="servings"]').val(eventServings);
+          $('#modalupdateForm input[name="diet"]').val(eventDiet);
+          $('#modalupdateForm input[name="calories"]').val(eventCalories);
+
+          editor2.data.set(eventType);
+
+          $('#modalupdateForm input[name="name"]').focus();
+        });
+
+        $(".btn-edit").click(function () {
+          $("#modalupdateForm label").addClass("active");
+        });
+
+        $(".btn-delete").on("click", function (e) {
+          e.preventDefault();
+          var deleteURL = $(this).attr("href");
+          swal
+            .fire({
+              title: "Are you sure?",
+              text:
+                "This recipe and all the data inside will be deleted permanently!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Yes, delete it!",
+            })
+            .then(function (result) {
+              if (result.value) {
+                window.location.href = deleteURL;
+              }
+            });
+        });
+      });
+      /*   var id=0;
+    $('#add').click(function () {
+    var table = $(this).closest('ul');
+    if (table.find('input:text').length < 7) {
+        id++
+        table.append(
+         id, '<li><div class="md-form mb-5"><input type="text"  name="ingredientname" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Name</label></div><div class="md-form mb-5"><input type="number"  name="amount" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Amount</label></div><div class="md-form mb-5"><input type="text"  name="unitofmeasure" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Unit of measure</label></div></li>');
+    }
+    });
+    
+    var array = [];
+    // $('#ingredients li').each(function(i, li) {
+    //   array.push($(li));
+      
+    // });
+    
+    $("#ul").each(function() { array.push($(this).text())}); 
+    alert(array[0])
+    var a = $('#ingredient').data('myval'); //getter
+    alert(a);
+    $('#mydiv').data('myval',20); //setter
+    alert($('#mydiv').data('myval'));
+
+ */
+    </script>
+  </body>
+</html>

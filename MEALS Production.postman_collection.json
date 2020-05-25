@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "1b6ad4f5-187d-4da7-aa72-cd39faec70a4",
+		"name": "MEALS Production",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Root Route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				},
+				"description": "Root Route"
+			},
+			"response": []
+		},
+		{
+			"name": "Login Route",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"asifmai2k@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Login Route"
+			},
+			"response": []
+		},
+		{
+			"name": "Me Route",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVjOTdkZmIyZTA4MjYzYmE4MWE1NTkxIn0sImlhdCI6MTU5MDI2NDA4NiwiZXhwIjoxNTkwMjY3Njg2fQ.kPuzNmJmIABqc_40SfI7LFEcWSml0IKgtRTq0wywxDU",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/api/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"me"
+					]
+				},
+				"description": "Me Route"
+			},
+			"response": []
+		},
+		{
+			"name": "Save Profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVjOTdkZmIyZTA4MjYzYmE4MWE1NTkxIn0sImlhdCI6MTU5MDI2NDA4NiwiZXhwIjoxNTkwMjY3Njg2fQ.kPuzNmJmIABqc_40SfI7LFEcWSml0IKgtRTq0wywxDU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Iqbal\",\n\t\"height\": \"10\",\n\t\"weight\": \"70\",\n\t\"age\": \"35\",\n\t\"activityLevel\": \"one\",\n\t\"noOfMeals\": \"5\",\n\t\"calories\": \"3\",\n\t\"carbs\": \"4\",\n\t\"fats\": \"5\",\n\t\"proteins\": \"6\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profile"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				},
+				"description": "Profile Route"
+			},
+			"response": []
+		},
+		{
+			"name": "Meals Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVjOTdkZmIyZTA4MjYzYmE4MWE1NTkxIn0sImlhdCI6MTU5MDI2NDA4NiwiZXhwIjoxNTkwMjY3Njg2fQ.kPuzNmJmIABqc_40SfI7LFEcWSml0IKgtRTq0wywxDU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/api/meals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"meals"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				},
+				"description": "Meals get"
+			},
+			"response": []
+		},
+		{
+			"name": "Meals Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVjOTdkZmIyZTA4MjYzYmE4MWE1NTkxIn0sImlhdCI6MTU5MDI2NDA4NiwiZXhwIjoxNTkwMjY3Njg2fQ.kPuzNmJmIABqc_40SfI7LFEcWSml0IKgtRTq0wywxDU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/api/meals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"meals"
+					]
+				},
+				"description": "Meals post"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

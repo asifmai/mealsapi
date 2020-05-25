@@ -1,0 +1,62 @@
+<header>
+  <!-- Navbar -->
+  <nav
+    class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
+  >
+    <div class="container-fluid">
+      <div class="welcome">
+        <span
+          >Welcome
+          <strong
+            ><%= user ? user.firstName + ' ' + user.lastName : ''%></strong
+          ></span
+        >
+        <a href="/dashboard/logout" class="btn btn-success ml-3 btn-sm">Log Out</a>
+      </div>
+      <!-- Right -->
+      <div class="alarm-clock ml-auto">
+        <div class="date">
+          <span class="month"></span>
+          <span class="day"></span>,
+          <span class="year"></span>
+        </div>
+        <div class="time">
+          <span class="hours"></span>
+          <span class="colon">:</span>
+          <span class="minutes"></span>
+          <span class="colon">:</span>
+          <span class="seconds"></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar -->
+  <!-- Sidebar -->
+  <div class="sidebar-fixed position-fixed">
+    <a class="logo-wrapper waves-effect text-dark" href="/admin">
+      <h1 class="font-weight-bold">Meal</h1>
+      <h3 class="lead">Planner</h3>
+    </a>
+    <div class="list-group list-group-flush">
+      <a
+        href="/dashboard/admin"
+        class="list-group-item list-group-item-action waves-effect <%= page == 'admin' ? 'active' : '' %>"
+      >
+        <i class="fas fa-user mr-3"></i>Recipes</a
+      >
+      <a
+        href="/dashboard/ingredient"
+        class="list-group-item list-group-item-action waves-effect <%= page == 'ingredient' ? 'active' : '' %>"
+      >
+        <i class="fas fa-table mr-3"></i>Ingredients</a
+      >
+      <a
+        href="/dashboard/recipeingredient"
+        class="list-group-item list-group-item-action waves-effect <%= page == 'recipeingredient' ? 'active' : '' %>"
+      >
+        <i class="fas fa-table mr-3"></i>Recipe Ingredient</a
+      >
+    </div>
+  </div>
+  <!-- Sidebar -->
+</header>

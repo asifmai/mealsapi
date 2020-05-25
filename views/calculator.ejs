@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/commonheader.ejs') %>
+  </head>
+  <body>
+    <%- include('partials/comnavbar.ejs') %>
+
+    <div class="container pt-5">
+
+
+        <div class="card p-4 targetSection">
+          <h2 class="text-bold text-center mb-5">Target <br> Macros</h2>
+          <div class="text-center mb-5">
+            <h3>Fats</h3>
+            <h5><%= typeof meal1Fat !== "undefined" ? meal1Fat : "" %> g</h5>
+          </div>        
+  
+          <div class="text-center mb-5">
+            <h3>Proteins</h3>
+            <h5><%= typeof meal1Proteins !== "undefined" ? meal1Proteins : "" %> g</h5>
+          </div>        
+  
+          <div class="text-center mb-5">
+            <h3>Carbs</h3>
+            <h5><%= typeof meal1Carbs !== "undefined" ? meal1Carbs : "" %> g</h5>
+          </div>        
+  
+        </div>
+
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-between">
+
+          <h1 class="brand-name text-white">Meal PLAN</h1>
+          <% if(isFriday){ %>
+            <a class="btn btn-secondary btn-large" href="/newMealPlan">Create New  Meal Plan</a>
+          <% } %>
+            <h1 class="date text-white">Wk: 01-07/02/2019</h1>
+  
+        </div>
+      </div>
+
+        <div class="row orange-row pt-4 pb-4">
+          <% for(var i =0; i< daysArr.length;i++){ %>
+            <div class="col-md-4">
+              <div class="d-flex align-items-center justify-content-between">
+                <h3 class="text-white">
+                  <%= moment(daysArr[i]['date'],'DD/MM/YYYY').format('dddd DD') %>
+                </h3>
+                <button
+                  class="btn btn-primary modal-toggle"
+                  data-toggle="modal"
+                  data-target="#basicExampleModal"
+                  data-dayid="<%= daysArr[i]['_id']  %>"
+                >
+                  Add Meal
+                </button>
+              </div>
+              <table class="table table-striped table-bordered">
+                <tbody>
+                  <% for(var j =0; j< daysArr[i].recipes.length;j++){ %>
+                    <tr >
+                      <td class="d-flex" style="justify-content:space-around">
+                        <span>
+                          <%= daysArr[i].recipes[j]['name'] %>
+                        </span>
+
+                        <span>
+                          <%= daysArr[i].recipes[j].fats %>g, 
+                          <%= daysArr[i].recipes[j].carbs %>g, 
+                          <%= daysArr[i].recipes[j].proteins %>g
+                        </span>
+                      </td>
+                    </tr>
+                  <% } %>
+                  <tr>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            
+          <% } %>
+        </div>
+  
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="basicExampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <form action="/createMeal" method="post">
+            <input type="hidden" name="dayid">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Meals</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body p-5 pt-2">
+            <button class="btn btn-primary float-right addRecipe" type="button">
+              Add Recipe
+            </button>
+
+            <table class="table table-striped table-hover">
+              <thead>
+                <th style="width: 200px;">
+                  Type
+                </th>
+                <th style="width: 200px;">
+                  Recipe
+                </th>
+                <th style="width: 200px;">
+                  Quantity
+                </th>
+                <th>
+                  Fats
+                </th>
+                <th>
+                  Proteins
+                </th>
+                <th>
+                  Carbs
+                </th>
+              </thead>
+              <tbody class="recipeBody">
+              
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="Submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/commonscripts.ejs') %>
+
+    <table>
+      <tr class="d-none recipeClone">
+        <td>
+          <select required class="browser-default mealSelect typeSelect">
+            <option selected disabled>Select Recipe Type</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>                      
+          </select>
+        </td>
+        <td>
+          <select required class="browser-default mealSelect selectMeal" name="recipe1">
+            <option selected disabled>Select a Dish</option>
+            <% for(var i = 0; i<recipes.length;i++){ %>
+              <option data-type="<%= recipes[i].type %>" data-unit="<%= recipes[i].unit %>" data-proteins="<%= recipes[i].proteins %>" data-fat="<%= recipes[i].fats %>" data-carb="<%= recipes[i].carbs %>"  value="<%= recipes[i]._id %>"><%= recipes[i].name %> </option>
+            <% } %>
+          </select>
+        </td>
+        <td>
+          <div class="input-group">
+            <div class="input-group-prepend d-none">
+              <div class="input-group-text"></div>
+            </div>
+            <input
+            required
+              type="text"
+              class="form-control py-0 quantityInput"
+              id="inlineFormInputGroup"
+              placeholder="Quantity"
+              name="quantity1"
+            />
+          </div>
+        </td>
+        <td style="padding-top: 1.6em;"></td>
+        <td style="padding-top: 1.6em;"></td>
+        <td style="padding-top: 1.6em;"></td>
+      </tr>
+    </table>
+
+    <script>
+      $(".addRecipe").click(function () {
+        const RecipeClone = $(".recipeClone").clone();
+        const recipeLength = $(".recipeBody > tr").length 
+        console.log(recipeLength);       
+        $(RecipeClone).find(".quantityInput").attr("name",`quantity${recipeLength +1}`) 
+        $(RecipeClone).find(".selectMeal").attr("name",`recipe${recipeLength +1}`)        
+        $(RecipeClone)
+          .removeClass("d-none")
+          .removeClass("recipeClone")
+          .appendTo(".recipeBody");
+      });
+
+      $("body").on('change','.selectMeal',function(){
+        const selOption = $(this).find("option:selected")
+        let fats = $(selOption).attr('data-fat')
+        let carbs = $(selOption).attr('data-carb')
+        let prots = $(selOption).attr('data-proteins')
+        let unit = $(selOption).attr('data-unit')        
+        $(this).parent().parent().find("td:nth-child(4)").text(`${fats} g`)
+        $(this).parent().parent().find("td:nth-child(5)").text(`${prots} g`)
+        $(this).parent().parent().find("td:nth-child(6)").text(`${carbs} g`)
+        $(this).parent().parent().find("td:nth-child(3) input").val(1)
+        $(this).parent().parent().find("td:nth-child(3)").find('.input-group-prepend').removeClass("d-none")
+        $(this).parent().parent().find("td:nth-child(3)").find('.input-group-prepend').find("div").text(unit)        
+      })
+
+      $("body").on("change",'.typeSelect',function(){
+        const type = $(this).val()
+        $(".selectMeal option").removeClass("d-none")
+
+        $(".selectMeal option").each(function(ind){
+            if($(this).attr('data-type') !== type)
+            $(this).addClass("d-none")
+        })
+      })
+
+      $("body").on("change",".quantityInput",function(){
+        const val = $(this).val()
+        if(val > 0){
+          let fatText = $(this).parent().parent().parent().find(".selectMeal option:selected").attr('data-fat').replace("g")          
+          fatText = parseInt(fatText) * parseInt(val)
+          $(this).parent().parent().parent().find("td:nth-child(4)").text(`${fatText} g`)
+          let proteinText = $(this).parent().parent().parent().find(".selectMeal option:selected").attr('data-proteins').replace("g")          
+          proteinText = parseInt(proteinText) * parseInt(val)
+          $(this).parent().parent().parent().find("td:nth-child(5)").text(`${proteinText} g`)
+          let carbText = $(this).parent().parent().parent().find(".selectMeal option:selected").attr('data-carb').replace("g")          
+          carbText = parseInt(carbText) * parseInt(val)
+          $(this).parent().parent().parent().find("td:nth-child(6)").text(`${carbText} g`)
+        }
+      })
+
+      $("body").on("click",".modal-toggle",function(){
+        const dayid = $(this).attr("data-dayid")
+        $("input[name=dayid]").val(dayid)
+      })
+    </script>
+  </body>
+</html>
