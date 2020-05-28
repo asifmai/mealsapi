@@ -1,15 +1,24 @@
 const mongoose = require("mongoose");
+const path = require('path');
 
-var Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
 // Schema Setup
-const seatsSchema = new mongoose.Schema({
+const IngredientSchema = new mongoose.Schema({
   name: String,
   unitofmeasure: String,
+  image: String,
   createdAt: {
     type: Date,
     default: new Date(),
   },
 });
 
-module.exports = mongoose.model("ingredients", seatsSchema);
+// Virtuals
+IngredientSchema.virtual('imagePath').get(function() {
+  return path.resolve(__dirname, `../public/img/ingredients/${this.image}`);
+});
+
+// JSON
+IngredientSchema.set('toObject', {virtuals: true});
+IngredientSchema.set('toJSON', {virtuals: true});
+
+module.exports = mongoose.model("Ingredient", IngredientSchema);

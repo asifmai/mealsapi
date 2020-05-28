@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
-
-var Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
+const path = require('path');
 
 // Schema Setup
-const recepiesSchema = new mongoose.Schema({
+const RecipeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -42,13 +40,33 @@ const recepiesSchema = new mongoose.Schema({
     required: true,
   },
   diet: {
-    type: Array,
+    type: String,
     required: true,
   },
+  image: String,
+  ingredients: [
+    {
+      amount: Number,
+      ingredient: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ingredient'
+      }
+    }
+  ],
   createdAt: {
     type: Date,
     default: new Date(),
   },
 });
 
-module.exports = mongoose.model("recipes", recepiesSchema);
+
+// Virtuals
+RecipeSchema.virtual('imagePath').get(function() {
+  return path.resolve(__dirname, `../public/img/recipes/${this.image}`);
+});
+
+// JSON
+RecipeSchema.set('toObject', {virtuals: true});
+RecipeSchema.set('toJSON', {virtuals: true});
+
+module.exports = mongoose.model("Recipe", RecipeSchema);

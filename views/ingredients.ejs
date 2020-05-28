@@ -1,286 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include ('partials/commonhead.ejs') %>
-  </head>
 
-  <body>
-    <div class="body-wrapper">
-      <%- include ('partials/navbar.ejs') %>
-      <main class="pt-5 mx-lg-5">
-        <div class="container-fluild mt-5">
-          <div class="card mb-4">
-            <!--Card content-->
-            <div class="card-body d-sm-flex justify-content-between">
-              <a
-                href=""
-                data-toggle="modal"
-                data-target="#modalLoginForm"
-                class="btn btn-primary ml-auto"
-                type="submit"
-              >
-                Add Ingredients
-              </a>
-            </div>
+<head>
+  <%- include ('partials/commonhead.ejs') %>
+</head>
+
+<body>
+  <div class="body-wrapper">
+    <%- include ('partials/navbar.ejs') %>
+    <main class="pt-5 mx-lg-5">
+      <div class="container-fluild mt-5">
+        <div class="card mb-4">
+          <!--Card content-->
+          <div class="card-body d-sm-flex justify-content-between">
+            <a href="" data-toggle="modal" data-target="#modalLoginForm" class="btn btn-primary ml-auto" type="submit">
+              Add Ingredients
+            </a>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <!--Card-->
-              <div class="card">
-                <!--Card content-->
-                <div class="card-body">
-                  <!-- Table  -->
-                  <div class="table-responsive text-nowrap">
-                    <table class="table table-hover">
-                      <col width="5%" />
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!--Card-->
+            <div class="card">
+              <!--Card content-->
+              <div class="card-body">
+                <!-- Table  -->
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-hover">
+                    <!-- <col width="5%" />
                       <col width="5%" />
                       <col width="15%" />
                       <col width="10%" />
-                      <col width="40%" />
-                      <!-- Table head -->
-                      <thead class="blue-grey lighten-4">
-                        <tr>
-                          <th>S#</th>
-                          <!-- <th>Ingredient ID</th> -->
-                          <th>Ingredient Name</th>
-                          <th>Unit Of Measure</th>
-                          <th>Created Date</th>
-                          <th class="text-center">Actions</th>
-                        </tr>
-                      </thead>
-                      <!-- Table head -->
-                      <!-- Table body -->
-                      <tbody>
-                        <% for(var i=0; i< ingredients.length; i++) {%>
-                        <tr>
-                          <th scope="row"><%= i+1 %></th>
-                          <!-- <td><%= ingredients[i].ingredientID %></td> -->
-                          <td><%= ingredients[i].name %></td>
-                          <td><%= ingredients[i].unitofmeasure %></td>
-                          <td class="createdAt">
-                            <%= ingredients[i].createdAt %>
-                          </td>
-                          <td class="text-center">
-                            <a
-                              href="#"
-                              ingredient-name="<%= ingredients[i].name %>"
-                              ingredient-unitofmeasure="<%= ingredients[i].unitofmeasure %>"
-                              ingredient-ingredientID="<%= ingredients[i].ingredientID %>"
-                              ingredient-id="<%= ingredients[i]._id %>"
-                              class="btn btn-green btn-md waves-effect waves-light mr-3 btn-edit"
-                              data-toggle="modal"
-                              data-target="#modalupdateForm"
-                              ><i class="far fa-edit"></i
-                            ></a>
-                            <a
-                              href="/dashboard/deleteingredient/<%= ingredients[i].id %>"
-                              class="btn btn-danger btn-md waves-effect waves-light btn-delete"
-                              ><i class="far fa-trash-alt"></i
-                            ></a>
-                          </td>
-                        </tr>
-                        <% } %>
-                      </tbody>
-                      <!-- Table body -->
-                    </table>
+                      <col width="40%" /> -->
+                    <!-- Table head -->
+                    <thead class="blue-grey lighten-4">
+                      <tr>
+                        <th>S#</th>
+                        <!-- <th>Ingredient ID</th> -->
+                        <th>Image</th>
+                        <th>Ingredient Name</th>
+                        <th>Unit Of Measure</th>
+                        <th>Created Date</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <!-- Table head -->
+                    <!-- Table body -->
+                    <tbody>
+                      <% for(var i=0; i< ingredients.length; i++) {%>
+                      <tr>
+                        <th scope="row"><%= i+1 %></th>
+                        <td>
+                          <img src="/img/ingredients/<%= ingredients[i].image %>" alt=""
+                            style="width: 50px; height: 50px;">
+                        </td>
+                        <!-- <td><%= ingredients[i].ingredientID %></td> -->
+                        <td><%= ingredients[i].name %></td>
+                        <td><%= ingredients[i].unitofmeasure %></td>
+                        <td class="createdAt">
+                          <%= ingredients[i].createdAt %>
+                        </td>
+                        <td class="text-center">
+                          <a href="#" ingredient-name="<%= ingredients[i].name %>"
+                            ingredient-unitofmeasure="<%= ingredients[i].unitofmeasure %>"
+                            ingredient-ingredientID="<%= ingredients[i].ingredientID %>"
+                            ingredient-id="<%= ingredients[i]._id %>" ingredient-image="<%= ingredients[i].image %>"
+                            class="btn btn-green btn-md waves-effect waves-light mr-3 btn-edit" data-toggle="modal"
+                            data-target="#modalupdateForm"><i class="far fa-edit"></i></a>
+                          <a href="/admin/deleteingredient/<%= ingredients[i].id %>"
+                            class="btn btn-danger btn-md waves-effect waves-light btn-delete"><i
+                              class="far fa-trash-alt"></i></a>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                    <!-- Table body -->
+                  </table>
+                </div>
+                <!-- Table  -->
+              </div>
+            </div>
+            <!--/.Card-->
+          </div>
+        </div>
+        <!-- Central Modal Medium Info -->
+        <form action="/admin/addingredient" method="post" encType="multipart/form-data">
+          <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">
+                    Add a New Ingredients
+                  </h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="md-form mb-2">
+                    <input type="text" name="name" id="form-autocomplete" class="form-control mdb-autocomplete"
+                      required />
+                    <label for="form-autocomplete" class="">Ingredient Name</label>
                   </div>
-                  <!-- Table  -->
+
+                  <div class="md-form mb-2">
+                    <input type="text" name="unitofmeasure" id="form-autocomplete" class="form-control mdb-autocomplete"
+                      required />
+                    <label for="form-autocomplete" class="">Unit Of Measure</label>
+                  </div>
+
+                  <div class="input-group my-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupFileAddon01">Image</span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="image-upload"
+                        aria-describedby="inputGroupFileAddon01" name="image" required>
+                      <label class="custom-file-label" for="image-upload">Choose file</label>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <button class="btn btn-default">Submit</button>
                 </div>
               </div>
-              <!--/.Card-->
             </div>
           </div>
-          <!-- Central Modal Medium Info -->
-          <form
-            action="/dashboard/addingredient"
-            method="post"
-            encType="multipart/form-data"
-          >
-            <div
-              class="modal fade"
-              id="modalLoginForm"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="myModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">
-                      Add Ingredienst
-                    </h4>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body mx-5">
-                    <label for="form-autocomplete" class=""
-                      >Ingredient Name</label
-                    >
-                    <div class="md-form mb-5">
-                      <input
-                        type="text"
-                        name="name"
-                        id="form-autocomplete"
-                        class="form-control mdb-autocomplete"
-                        required
-                      />
-                    </div>
+        </form>
 
-                    <label for="form-autocomplete" class=""
-                      >Unit Of Measure</label
-                    >
-                    <div class="md-form mb-5">
-                      <input
-                        type="text"
-                        name="unitofmeasure"
-                        id="form-autocomplete"
-                        class="form-control mdb-autocomplete"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-default">Submit</button>
-                  </div>
+        <form action="/admin/editingredient" method="post" encType="multipart/form-data">
+          <div class="modal fade" id="modalupdateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">
+                    Update Ingredient
+                  </h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-              </div>
-            </div>
-          </form>
+                <div class="modal-body">
+                  <input hidden type="text" name="id" id="form-autocomplete" class="form-control mdb-autocomplete"
+                    required />
 
-          <form
-            action="/dashboard/editingredient"
-            method="post"
-            encType="multipart/form-data"
-          >
-            <div
-              class="modal fade"
-              id="modalupdateForm"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="myModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">
-                      Update Ingredient
-                    </h4>
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body mx-5">
-                    <input
-                      hidden
-                      type="text"
-                      name="id"
-                      id="form-autocomplete"
-                      class="form-control mdb-autocomplete"
-                      required
-                    />
-                   
-
+                  <div class="md-form mb-3">
+                    <input type="text" name="name" id="form-autocomplete" class="form-control mdb-autocomplete"
+                      required />
                     <label for="form-autocomplete" class="">Name</label>
-                    <div class="md-form mb-5">
-                      <input
-                        type="text"
-                        name="name"
-                        id="form-autocomplete"
-                        class="form-control mdb-autocomplete"
-                        required
-                      />
+                  </div>
+
+                  <div class="md-form mb-3">
+                    <input type="text" name="unitofmeasure" id="form-autocomplete" class="form-control mdb-autocomplete"
+                      required />
+                    <label for="form-autocomplete" class="">Unit of measure</label>
+                  </div>
+
+                  <img src="" alt="" class="img-fluid image-upload-edit">
+
+                  <div class="input-group my-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupFileAddon01">Image</span>
                     </div>
-                    <label for="form-autocomplete" class=""
-                      >Unit of measure</label
-                    >
-                    <div class="md-form mb-5">
-                      <input
-                        type="text"
-                        name="unitofmeasure"
-                        id="form-autocomplete"
-                        class="form-control mdb-autocomplete"
-                        required
-                      />
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="image-upload-edit"
+                        aria-describedby="inputGroupFileAddon01" name="image">>
+                      <label class="custom-file-label" for="image-upload-edit">Choose file</label>
                     </div>
                   </div>
-                  <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-default" type="submit">
-                      Submit
-                    </button>
-                  </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <button class="btn btn-default" type="submit">
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
-          </form>
-          <!-- Central Modal Medium Info-->
-        </div>
-      </main>
-    </div>
+          </div>
+        </form>
+        <!-- Central Modal Medium Info-->
+      </div>
+    </main>
+  </div>
 
-    <%- include ('partials/commonscripts.ejs') %>
-    <script>
-      $(document).ready(function () {
-        $("td.createdAt").each(function (index, element) {
-          var dt = $(element).text();
-          var newdt = moment(dt).format("MM-DD-YY HH:mm");
-          $(element).text(newdt);
-        });
-
-        $(".btn-edit").click(function (e) {
-          e.preventDefault();
-          var eventId = $(this).attr("ingredient-id");
-          var eventName = $(this).attr("ingredient-name");
-          var eventUnitOfMeasure = $(this).attr("ingredient-unitofmeasure");
-          var eventIngredientID = $(this).attr("ingredient-ingredientID");
-
-          $('#modalupdateForm input[name="id"]').val(eventId);
-          $('#modalupdateForm input[name="name"]').val(eventName);
-          $('#modalupdateForm input[name="unitofmeasure"]').val(
-            eventUnitOfMeasure
-          );
-          $('#modalupdateForm input[name="ingredientID"]').val(
-            eventIngredientID
-          );
-
-          $('#modalupdateForm input[name="name"]').focus();
-        });
-
-        $(".btn-edit").click(function () {
-          $("#modalupdateForm label").addClass("active");
-        });
-
-        $(".btn-delete").on("click", function (e) {
-          e.preventDefault();
-          var deleteURL = $(this).attr("href");
-          swal
-            .fire({
-              title: "Are you sure?",
-              text:
-                "This ingredient and all the data inside will be deleted permanently!",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonText: "Yes, delete it!",
-            })
-            .then(function (result) {
-              if (result.value) {
-                window.location.href = deleteURL;
-              }
-            });
-        });
+  <%- include ('partials/commonscripts.ejs') %>
+  <script>
+    $(document).ready(function () {
+      $("td.createdAt").each(function (index, element) {
+        var dt = $(element).text();
+        var newdt = moment(dt).format("MM-DD-YY HH:mm");
+        $(element).text(newdt);
       });
-    </script>
-  </body>
+
+      $(".btn-edit").click(function (e) {
+        e.preventDefault();
+        var eventId = $(this).attr("ingredient-id");
+        var eventName = $(this).attr("ingredient-name");
+        var eventUnitOfMeasure = $(this).attr("ingredient-unitofmeasure");
+        var eventIngredientID = $(this).attr("ingredient-ingredientID");
+        var eventImage = $(this).attr("ingredient-image");
+
+        $('#modalupdateForm input[name="id"]').val(eventId);
+        $('#modalupdateForm input[name="name"]').val(eventName);
+        $('#modalupdateForm input[name="unitofmeasure"]').val(eventUnitOfMeasure);
+        $('#modalupdateForm input[name="ingredientID"]').val(eventIngredientID);
+        $('#modalupdateForm img').attr('src', '/img/ingredients/' + eventImage);
+
+        $('#modalupdateForm input[name="name"]').focus();
+      });
+
+      $(".btn-edit").click(function () {
+        $("#modalupdateForm label").addClass("active");
+      });
+
+      $(".btn-delete").on("click", function (e) {
+        e.preventDefault();
+        var deleteURL = $(this).attr("href");
+        swal
+          .fire({
+            title: "Are you sure?",
+            text: "This ingredient and all the data inside will be deleted permanently!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+          })
+          .then(function (result) {
+            if (result.value) {
+              window.location.href = deleteURL;
+            }
+          });
+      });
+    });
+
+
+    $('input#image-upload-edit').change(function () {
+      readURL(this);
+    })
+
+    function readURL(input) {
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('img.image-upload-edit').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+</body>
+
 </html>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const planSchema = new mongoose.Schema({
+const MemberSchema = new mongoose.Schema({
   Userid: String,
   weightKg: Number,
   heightFt: String,
@@ -20,4 +20,4 @@ const planSchema = new mongoose.Schema({
   meal3Carbs: Number,
 });
 
-module.exports = mongoose.model("Members", planSchema);
+module.exports = mongoose.model("Member", MemberSchema);

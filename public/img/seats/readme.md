@@ -1,1 +1,0 @@
-this is where seats images are stored

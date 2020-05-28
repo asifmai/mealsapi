@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
   name: String,
-  height: String,
-  weight: String,
+  height: Number,
+  weight: Number,
   age: Number,
   activityLevel: String,
   noOfMeals: Number,
-  calories: String,
-  carbs: String,
-  fats: String,
-  proteins: String,
+  calories: Number,
+  carbs: Number,
+  fats: Number,
+  proteins: Number,
 })
 
 module.exports = mongoose.model('Profile', ProfileSchema);

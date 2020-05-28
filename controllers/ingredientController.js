@@ -1,3 +1,6 @@
+const fs = require('fs-extra');
+const uuid = require('uuid').v1;
+const path = require('path');
 const Ingredient = require("../models/ingredients");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -7,30 +10,67 @@ cloudinary.config({
 });
 
 module.exports.index_get = async (req, res) => {
-  const ingredients = await Ingredient.find().sort({ createdAt: "desc" });
-  res.render("ingredients", { ingredients, page: "ingredient" });
+  const ingredients = await Ingredient.find().sort({
+    createdAt: "desc"
+  });
+  res.render("ingredients", {
+    ingredients,
+    page: "ingredient"
+  });
 };
 
 module.exports.deleteingredient = async (req, res) => {
-  const { id } = req.params;
-  await Ingredient.findByIdAndDelete(id);
-  res.redirect("/dashboard/ingredient");
-};
-module.exports.addingredient = async (req, res) => {
-  const { name, unitofmeasure } = req.body;
+  try {
+    const ing = await Ingredient.findById(req.params.id);
+    if (fs.existsSync(ing.imagePath)) fs.unlinkSync(ing.imagePath);
+    await Ingredient.findByIdAndDelete(req.params.id);
 
-  const newSeat = new Ingredient({ name, unitofmeasure });
-  newSeat.save();
-  res.redirect("/dashboard/ingredient");
+    res.redirect("/admin/ingredients");
+  } catch (error) {
+    console.log(error);
+    res.send('Server Error')
+  }
+};
+
+module.exports.addingredient = async (req, res) => {
+  try {
+    const filePathOld = req.files.image.tempFilePath;
+    const fileName = `${uuid()}.${req.files.image.name.split('.').pop()}`;
+    const filePathNew = path.resolve(__dirname, `../public/img/ingredients/${fileName}`);
+    fs.moveSync(filePathOld, filePathNew);
+  
+    const newSeat = new Ingredient({
+      name: req.body.name,
+      unitofmeasure: req.body.unitofmeasure,
+      image: fileName
+    });
+  
+    newSeat.save();
+  
+    res.redirect("/admin/ingredients");
+  } catch (error) {
+    console.log(error);
+    res.send('Server Error')
+  }
 };
 
 module.exports.editingredient = async (req, res) => {
-  const {  name, unitofmeasure } = req.body;
-
   await Ingredient.findByIdAndUpdate(req.body.id, {
-    name: name,
-    unitofmeasure: unitofmeasure,
+    name: req.body.name,
+    unitofmeasure: req.body.unitofmeasure,
   });
 
-  res.redirect("/dashboard/ingredient");
+  if (req.files) {
+    const ing = await Ingredient.findById(req.body.id);
+    fs.unlinkSync(path.join(__dirname, `../public/img/ingredients/${ing.image}`));
+    const filePathOld = req.files.image.tempFilePath;
+    const fileName = `${uuid()}.${req.files.image.name.split('.').pop()}`;
+    const filePathNew = path.resolve(__dirname, `../public/img/ingredients/${fileName}`);
+    fs.moveSync(filePathOld, filePathNew);
+    await Ingredient.findByIdAndUpdate(req.body.id, {
+      image: fileName
+    });
+  }
+
+  res.redirect("/admin/ingredients");
 };

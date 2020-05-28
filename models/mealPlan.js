@@ -1,21 +1,27 @@
 const mongoose = require("mongoose");
 
-var Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
-// Schema Setup
-const seatsSchema = new mongoose.Schema({
+const MealPlanSchema = new mongoose.Schema({
   user_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   date: {
     type: String,
     required: true,
   },
+  recepies: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+    },
+  ],
   createdAt: {
     type: Date,
     default: new Date(),
   },
 });
 
-module.exports = mongoose.model("mealPlan", seatsSchema);
+// Link with Recepie
+
+module.exports = mongoose.model("Mealplan", MealPlanSchema);

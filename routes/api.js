@@ -5,6 +5,7 @@ const allowedUsers = require('../helpers/allowedusers');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const authMW = require('../middleware/authMw');
+const Recipe = require('../models/recipes');
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -36,6 +37,7 @@ router.post('/login', async (req, res, next) => {
       }
     };
 
+    const userDetails = await User.find({email}).select('-password -firstName -lastName')
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
@@ -44,7 +46,8 @@ router.post('/login', async (req, res, next) => {
         if (err) throw err;
         return res.status(200).json({
           newUser,
-          token
+          token,
+          user: userDetails
         });
       }
     ); 
@@ -72,7 +75,7 @@ router.get('/me', authMW, async (req, res, next) => {
     console.error(error.message);
     res.status(500).send('Server error');
   }
-})
+});
 
 router.post('/profile', authMW, async (req, res, next) => {
   try {
@@ -88,11 +91,19 @@ router.post('/profile', authMW, async (req, res, next) => {
       fats,
       proteins
     } = req.body;
+
+    // if (req.body.profileId) {
+
+    // } else {
+      
+    // }
+
+
     const newProfile = new Profile({
       name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins
     })
     await newProfile.save();
-    await User.findOneAndUpdate(req.user.id, {profile: newProfile.id});
+    await User.findByIdAndUpdate(req.user.id, {profile: newProfile.id});
     res.status(200).send('Profile added...');
   } catch (error) {
     console.error(error.message);
@@ -107,7 +118,7 @@ router.get('/meals', authMW, async (req, res, next) => {
     console.error(error.message);
     res.status(500).send('Server error');
   }
-})
+});
 
 router.post('/meals', authMW, async (req, res, next) => {
   try {
@@ -116,6 +127,23 @@ router.post('/meals', authMW, async (req, res, next) => {
     console.error(error.message);
     res.status(500).send('Server error');
   }
-})
+});
+
+router.get('/recipes', authMW, async (req, res, next) => {
+  try {
+    const recipes = await Recipe.find().populate({
+      path: 'ingredients',
+      populate: {
+        path: 'ingredient',
+        model: 'Ingredient'
+      }
+    }).sort({name: "asc"});
+
+    res.status(200).json(recipes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = router;

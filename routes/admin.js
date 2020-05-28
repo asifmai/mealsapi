@@ -4,90 +4,64 @@ const passport = require("passport");
 const router = express.Router();
 const recipeController = require("../controllers/recipeController");
 const ingredientController = require("../controllers/ingredientController");
-// const mailController = require("../controllers/mailController");
-const recipeIngredients = require("../controllers/ingredientRecipeController");
+const recipeIngredientsController = require("../controllers/ingredientRecipeController");
 
 const {
   ensureAuthenticatedAdmin
 } = require("../helpers/auth");
 
-router.get('/', (req, res) => {
-  res.redirect('/dashboard/admin');
-})
-
 router.get("/login", (req, res) => {
-  res.render("login", { page: "" });
+  res.render("login", {
+    page: ""
+  });
 });
 
 router.get("/logout", ensureAuthenticatedAdmin, (req, res) => {
   req.logout();
   req.flash('success_msg', 'You have been logged out...');
-  res.redirect("/dashboard/login");
+  res.redirect("/admin/login");
 });
 
 router.post("/login", (req, res, next) => {
-  console.log("hit routes");
   passport.authenticate("local", {
-    successRedirect: "/dashboard/admin",
-    failureRedirect: "/dashboard/login",
+    successRedirect: "/admin",
+    failureRedirect: "/admin/login",
     failureFlash: 'Email or Password Incorrect...',
   })(req, res, next);
 });
 
-router.get("/admin", ensureAuthenticatedAdmin, recipeController.index_get);
+// Recipes Routes
+
+router.get("/", ensureAuthenticatedAdmin, recipeController.index_get);
 
 router.post("/addrecipe", ensureAuthenticatedAdmin, recipeController.addrecipe);
 
-router.get(
-  "/deleterecipe/:id",
-  ensureAuthenticatedAdmin,
-  recipeController.deleterecipe
-);
+router.post("/editrecipe", ensureAuthenticatedAdmin, recipeController.editrecipe);
+
+router.get("/deleterecipe/:id", ensureAuthenticatedAdmin, recipeController.deleterecipe);
+
+// Ingredients Routes
+
+router.get("/ingredients", ensureAuthenticatedAdmin, ingredientController.index_get);
+
+router.post("/addingredient", ensureAuthenticatedAdmin, ingredientController.addingredient);
+
+router.get("/deleteingredient/:id", ensureAuthenticatedAdmin, ingredientController.deleteingredient);
+
+router.post("/editingredient", ensureAuthenticatedAdmin, ingredientController.editingredient);
+
+// Recipe Ingredients Routes
+
+router.get("/recipeingredients", ensureAuthenticatedAdmin, recipeIngredientsController.index_get);
+
+router.post("/addrecipeingredient", ensureAuthenticatedAdmin, recipeIngredientsController.addrecipeingredient);
+
+router.get("/deleterecipeingredient/:recId/:ingId", ensureAuthenticatedAdmin,recipeIngredientsController.deleterecipeingredient);
 
 router.post(
   "/editrecipeingredient",
   ensureAuthenticatedAdmin,
-  recipeIngredients.editrecipeingredient
-);
-
-router.get(
-  "/recipeingredient",
-  ensureAuthenticatedAdmin,
-  recipeIngredients.index_get
-);
-
-router.post(
-  "/addrecipeingredient",
-  ensureAuthenticatedAdmin,
-  recipeIngredients.addrecipeingredient
-);
-
-router.get(
-  "/deleterecipeingredient/:id",
-  ensureAuthenticatedAdmin,
-  recipeIngredients.deleterecipeingredient
-);
-
-router.post("/editrecipe", ensureAuthenticatedAdmin, recipeController.editrecipe);
-
-router.get("/ingredient", ensureAuthenticatedAdmin, ingredientController.index_get);
-
-router.post(
-  "/addingredient",
-  ensureAuthenticatedAdmin,
-  ingredientController.addingredient
-);
-
-router.get(
-  "/deleteingredient/:id",
-  ensureAuthenticatedAdmin,
-  ingredientController.deleteingredient
-);
-
-router.post(
-  "/editingredient",
-  ensureAuthenticatedAdmin,
-  ingredientController.editingredient
+  recipeIngredientsController.editrecipeingredient
 );
 
 // router.post("/sendmail", mailController.sendMail);

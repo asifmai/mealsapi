@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 
-var Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
 // Schema Setup
-const seatsSchema = new mongoose.Schema({
+const MealSchema = new mongoose.Schema({
   recipe_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   mealplan_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   quantity: {
@@ -34,4 +32,4 @@ const seatsSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("meals", seatsSchema);
+module.exports = mongoose.model("Meal", MealSchema);

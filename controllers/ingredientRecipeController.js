@@ -10,50 +10,62 @@ cloudinary.config({
 });
 
 module.exports.index_get = async (req, res) => {
-  let recipes = await recipeIngredients.find().sort({ createdAt: "desc" });
-  console.log("ss", recipes);
-  recipes = await Promise.all(
-    recipes.map(async (item) => {
-      const recipe = await Recipe.findOne({ _id: item.recipeID });
+  // let recipes = await recipeIngredients.find().populate('recipeId ingredientId').sort({ createdAt: "desc" });
 
-      const ingredient = await Ingredient.findOne({ _id: item.ingredientID });
-      let tempobj = {
-        recipe,
-        ingredient,
-        _id: item._id,
-        amount: item.amount,
-      };
-      return tempobj;
-    })
-  ).then((res) => res);
+  const recipes = await Recipe.find().populate({
+    path: 'ingredients',
+    populate: {
+      path: 'ingredient',
+      model: 'Ingredient'
+    }
+  }).sort({createdAt: "desc"});
+  const ingredients = await Ingredient.find().sort({createdAt: "desc"});
 
-  const recipe = await Recipe.find().sort({ _id: "desc" });
-  const ingredients = await Ingredient.find().sort({ _id: "desc" });
   res.render("recipeingredient", {
+    // recipes,
     recipes,
-    recipe,
     ingredients,
     page: "recipeingredient",
   });
-
 };
 
 module.exports.deleterecipeingredient = async (req, res) => {
-  const { id } = req.params;
-  await recipeIngredients.findByIdAndDelete(id);
+  const {recId, ingId} = req.params;
+  const recipe = await Recipe.findById(recId);
+  let recipeIngredients = recipe.ingredients;
+  recipeIngredients = recipeIngredients.filter(ri => ri.ingredient != ingId);
 
-  res.redirect("/dashboard/recipeingredient/");
+  await Recipe.findByIdAndUpdate(recId, {ingredients: recipeIngredients});
+
+  res.redirect("/admin/recipeingredients");
 };
+
 module.exports.addrecipeingredient = async (req, res) => {
-  const { ingredientID, recipeID, amount } = req.body;
+  const {
+    ingredientID,
+    recipeID,
+    amount
+  } = req.body;
 
-  const newSeat = new recipeIngredients({ ingredientID, recipeID, amount });
-  await newSeat.save();
-  res.redirect("/dashboard/recipeingredient");
+  const recipe = await Recipe.findById(recipeID);
+  const recipeIngredients = recipe.ingredients;
+
+  recipeIngredients.push({
+    amount,
+    ingredient: ingredientID,
+  });
+
+  await Recipe.findByIdAndUpdate(recipeID, {ingredients: recipeIngredients});
+
+  res.redirect("/admin/recipeingredients");
 };
- 
+
 module.exports.editrecipeingredient = async (req, res) => {
-  const { ingredientID, recipeID, amount } = req.body;
+  const {
+    ingredientID,
+    recipeID,
+    amount
+  } = req.body;
 
   await recipeIngredients.findByIdAndUpdate(req.body.id, {
     ingredientID: ingredientID,

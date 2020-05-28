@@ -48,7 +48,7 @@ app.use(express.json({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "public")));
 app.use(cors());
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
+app.use(fileUpload({ useTempFiles: true, tempFileDir: path.join(__dirname, 'temp') }));
 
 // Global Variables
 app.use((req, res, next) => {
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 // Define Routes
 app.get('/', (req, res) => res.status(200).send('Server Running'));
 app.use('/api', require('./routes/api'));
-app.use('/dashboard', require('./routes/admin'));
+app.use('/admin', require('./routes/admin'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
