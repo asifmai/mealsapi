@@ -41,7 +41,6 @@ app.use(passport.session());
 // Connect Flash
 app.use(flash());
 
-
 // MiddleWares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({extended: false}));

@@ -26,7 +26,7 @@
               <div class="card-body">
                 <!-- Table  -->
                 <div class="table-responsive text-nowrap">
-                  <table class="table table-hover">
+                  <table class="table table-hover" id="table-recipe-ingredients">
                     <!-- <col width="5%" />
                       <col width="5%" />
                       <col width="15%" />
@@ -37,23 +37,23 @@
                       <tr>
                         <th>S#</th>
                         <th>Recipe</th>
-                        <th>Ingredient</th>
-                        <th>Unit of Measure</th>
                         <th>Amount</th>
+                        <th>Unit of Measure</th>
+                        <th>Ingredient</th>
                         <th class="text-center">Actions</th>
                       </tr>
                     </thead>
                     <!-- Table head -->
                     <!-- Table body -->
                     <tbody>
-                      <% for(var i=0; i< recipes.length; i++) {%>
-                        <% for(var j=0; j< recipes[i].ingredients.length; j++) {%>
+                      <% for(var i=0; i < recipes.length; i++) {%>
+                        <% for(var j=0; j < recipes[i].ingredients.length; j++) {%>
                           <tr>
                             <th scope="row"><%= i+1 %></th>
                             <th><%= recipes[i].name %></th>
-                            <td><%= recipes[i].ingredients[j].ingredient.name %></td>
-                            <td><%= recipes[i].ingredients[j].unitOfMeasure %></td>
                             <td><%= recipes[i].ingredients[j].amount %></td>
+                            <td><%= recipes[i].ingredients[j].unitOfMeasure %></td>
+                            <td><%= recipes[i].ingredients[j].ingredient.name %></td>
                             <td class="text-center">
                               <a href="#" data-recipeId="<%= recipes[i]._id  %>" data-unitofmeasure="<%= recipes[i].ingredients[j].unitOfMeasure%>"
                                 data-ingredientId="<%= recipes[i].ingredients[j].ingredient._id %>" data-amount="<%= recipes[i].ingredients[j].amount%>"
@@ -217,6 +217,9 @@
 
   <script>
     $(document).ready(function () {
+      $('#table-recipe-ingredients').DataTable({
+      });
+
       $("td.createdAt").each(function (index, element) {
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
