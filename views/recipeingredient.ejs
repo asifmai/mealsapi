@@ -35,7 +35,7 @@
                     <!-- Table head -->
                     <thead class="blue-grey lighten-4">
                       <tr>
-                        <th>S#</th>
+                        <!-- <th>S#</th> -->
                         <th>Recipe</th>
                         <th>Amount</th>
                         <th>Unit of Measure</th>
@@ -49,7 +49,7 @@
                       <% for(var i=0; i < recipes.length; i++) {%>
                         <% for(var j=0; j < recipes[i].ingredients.length; j++) {%>
                           <tr>
-                            <th scope="row"><%= i+1 %></th>
+                            <!-- <th scope="row"><%= i+1 %></th> -->
                             <th><%= recipes[i].name %></th>
                             <td><%= recipes[i].ingredients[j].amount %></td>
                             <td><%= recipes[i].ingredients[j].unitOfMeasure %></td>
