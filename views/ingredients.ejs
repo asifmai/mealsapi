@@ -35,7 +35,7 @@
                     <!-- Table head -->
                     <thead class="blue-grey lighten-4">
                       <tr>
-                        <th>S#</th>
+                        <!-- <th>S#</th> -->
                         <!-- <th>Ingredient ID</th> -->
                         <th>Image</th>
                         <th>Ingredient Name</th>
@@ -48,7 +48,7 @@
                     <tbody>
                       <% for(var i=0; i< ingredients.length; i++) {%>
                       <tr>
-                        <th scope="row"><%= i+1 %></th>
+                        <!-- <th scope="row"><%= i+1 %></th> -->
                         <td>
                           <img src="/img/ingredients/<%= ingredients[i].image %>" alt=""
                             style="width: 50px; height: 50px;">
@@ -176,7 +176,7 @@
   <script>
     $(document).ready(function () {
       $('#table-ingredients').DataTable({
-        "order": [[ 2, "asc" ]]
+        "order": [[ 1, "asc" ]]
       });
       
       $("td.createdAt").each(function (index, element) {
