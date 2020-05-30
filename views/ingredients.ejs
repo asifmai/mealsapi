@@ -175,14 +175,15 @@
   <%- include ('partials/commonscripts.ejs') %>
   <script>
     $(document).ready(function () {
-      $('#table-ingredients').DataTable({
-        "order": [[ 1, "asc" ]]
-      });
       
       $("td.createdAt").each(function (index, element) {
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
         $(element).text(newdt);
+      });
+
+      $('#table-ingredients').DataTable({
+        "order": [[ 1, "asc" ]]
       });
 
       $(".btn-edit").click(function (e) {

@@ -217,13 +217,14 @@
 
   <script>
     $(document).ready(function () {
-      $('#table-recipe-ingredients').DataTable();
 
       $("td.createdAt").each(function (index, element) {
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
         $(element).text(newdt);
       });
+
+      $('#table-recipe-ingredients').DataTable();
 
       $(".btn-edit").click(function (e) {
         e.preventDefault();

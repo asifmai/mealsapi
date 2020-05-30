@@ -405,9 +405,6 @@
   <script>
     $(document).ready(function () {
       $('.mdb-select').materialSelect();
-      $('#table-recipes').DataTable({
-        "order": [[ 1, "asc" ]]
-      });
 
       // ClassicEditor.create(document.querySelector("#editor"))
       //   .then((editor) => {
@@ -430,6 +427,10 @@
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
         $(element).text(newdt);
+      });
+
+      $('#table-recipes').DataTable({
+        "order": [[ 1, "asc" ]]
       });
 
       $(".btn-edit").click(function (e) {
