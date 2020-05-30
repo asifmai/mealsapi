@@ -11,7 +11,7 @@ cloudinary.config({
 
 module.exports.index_get = async (req, res) => {
   const ingredients = await Ingredient.find().sort({
-    createdAt: "desc"
+    name: "asc"
   });
   res.render("ingredients", {
     ingredients,
@@ -41,7 +41,6 @@ module.exports.addingredient = async (req, res) => {
   
     const newSeat = new Ingredient({
       name: req.body.name,
-      unitofmeasure: req.body.unitofmeasure,
       image: fileName
     });
   
@@ -57,7 +56,6 @@ module.exports.addingredient = async (req, res) => {
 module.exports.editingredient = async (req, res) => {
   await Ingredient.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
-    unitofmeasure: req.body.unitofmeasure,
   });
 
   if (req.files) {

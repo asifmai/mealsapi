@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports.index_get = async (req, res) => {
   const recipes = await Recipe.find().sort({
-    createdAt: "desc"
+    name: "asc"
   });
   res.render("recipes", {
     recipes,
@@ -28,6 +28,10 @@ module.exports.deleterecipe = async (req, res) => {
 
 module.exports.addrecipe = async (req, res) => {
   try {
+    if (!req.body.type || !req.body.diet) {
+      return res.redirect('/admin');
+    }
+
     const filePathOld = req.files.image.tempFilePath;
     const fileName = `${uuid()}.${req.files.image.name.split('.').pop()}`;
     const filePathNew = path.resolve(__dirname, `../public/img/recipes/${fileName}`);
@@ -37,8 +41,10 @@ module.exports.addrecipe = async (req, res) => {
       name: req.body.name,
       type: req.body.type,
       fats: req.body.fats,
+      fiber: req.body.fiber,
+      sugaralcohol: req.body.sugaralcohol,
+      cupsofveggies: req.body.cupsofveggies,
       carbs: req.body.carbs,
-      netcarbs: req.body.netcarbs,
       proteins: req.body.proteins,
       calories: req.body.calories,
       servings: req.body.servings,

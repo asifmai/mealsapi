@@ -41,9 +41,11 @@
                         <th>Unit</th>
                         <th>Type</th>
                         <th>Fats</th>
+                        <th>Fiber</th>
+                        <th>Sugar Alcohol</th>
+                        <th>Cups of Veggies</th>
                         <th>Carbs</th>
                         <th>Proteins</th>
-                        <th>Net Carbs</th>
                         <th>Calories</th>
                         <th>Servings</th>
                         <th>Diet</th>
@@ -65,9 +67,11 @@
                         <td><%= recipes[i].unit %></td>
                         <td><%= recipes[i].type %></td>
                         <td><%= recipes[i].fats %></td>
+                        <td><%= recipes[i].fiber %></td>
+                        <td><%= recipes[i].sugaralcohol %></td>
+                        <td><%= recipes[i].cupsofveggies %></td>
                         <td><%= recipes[i].carbs%></td>
                         <td><%= recipes[i].proteins %></td>
-                        <td><%= recipes[i].netcarbs %></td>
                         <td><%= recipes[i].calories%></td>
                         <td><%= recipes[i].servings %></td>
                         <td><%= recipes[i].diet %></td>
@@ -76,8 +80,8 @@
                         <td class="text-center">
                           <a href="#" article-title="<%= recipes[i].name %>" article-unit="<%= recipes[i].unit %>"
                             article-type="<%= recipes[i].type %>" article-fats="<%= recipes[i].fats%>"
-                            article-carbs="<%= recipes[i].carbs%>" article-netcarbs="<%= recipes[i].netcarbs %>"
-                            article-proteins="<%= recipes[i].proteins %>" article-calories="<%= recipes[i].calories %>"
+                            article-carbs="<%= recipes[i].carbs%>" article-fiber="<%= recipes[i].fiber %>" article-sugaralcohol="<%= recipes[i].sugaralcohol %>"
+                            article-proteins="<%= recipes[i].proteins %>" article-calories="<%= recipes[i].calories %>" article-cupsofveggies="<%= recipes[i].cupsofveggies %>"
                             article-servings="<%= recipes[i].servings %>" article-diet="<%= recipes[i].diet %>"
                             article-id="<%= recipes[i].id %>" article-recipeID="<%= recipes[i].recipeID %>"
                             class="btn btn-green btn-md waves-effect waves-light mr-3 btn-edit" data-toggle="modal"
@@ -134,11 +138,15 @@
                       </div>
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <select class="browser-default custom-select" name="type">
+                          <select class="mdb-select md-form" name="type" required multiple>
                             <option value="" disabled selected>Choose Recipe Type</option>
+                            <option value="AFI">AFI</option>
+                            <option value="Bread">Bread</option>
                             <option value="Breakfast">Breakfast</option>
-                            <option value="Lunch">Lunch</option>
+                            <option value="Dessert">Dessert</option>
                             <option value="Dinner">Dinner</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="OMAD">OMAD</option>
                           </select>
                         </div>
                       </div>
@@ -151,16 +159,30 @@
                       </div>
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="number" name="carbs" id="form-autocomplete" class="form-control mdb-autocomplete"
+                          <input type="number" name="fiber" id="form-autocomplete" class="form-control mdb-autocomplete"
                             required />
-                          <label for="form-autocomplete" class="">Carbs</label>
+                          <label for="form-autocomplete" class="">Fiber</label>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="number" name="netcarbs" id="form-autocomplete"
-                            class="form-control mdb-autocomplete" required />
-                          <label for="form-autocomplete" class="">Net Carbs</label>
+                          <input type="number" name="sugaralcohol" id="form-autocomplete" class="form-control mdb-autocomplete"
+                            required />
+                          <label for="form-autocomplete" class="">Sugar Alcohol</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="md-form mb-2">
+                          <input type="number" name="cupsofveggies" id="form-autocomplete" class="form-control mdb-autocomplete"
+                            required />
+                          <label for="form-autocomplete" class="">Cups of Veggies</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="md-form mb-2">
+                          <input type="number" name="carbs" id="form-autocomplete" class="form-control mdb-autocomplete"
+                            required />
+                          <label for="form-autocomplete" class="">Carbs</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -186,9 +208,13 @@
                       </div>
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="text" name="diet" id="form-autocomplete" class="form-control mdb-autocomplete"
-                            required />
-                          <label for="form-autocomplete" class="">Diet</label>
+                          <select class="mdb-select md-form" name="diet" required multiple>
+                            <option value="" disabled selected>Choose a Diet</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Pescatarian">Pescatarian</option>
+                            <option value="Vegan">Vegan</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -252,9 +278,16 @@
 
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="text" name="type" id="form-autocomplete" class="form-control mdb-autocomplete"
-                          required />
-                          <label for="form-autocomplete" class="">Type</label>
+                          <select class="mdb-select md-form" name="type" required multiple>
+                            <option value="" disabled selected>Choose Recipe Type</option>
+                            <option value="AFI">AFI</option>
+                            <option value="Bread">Bread</option>
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Dinner">Dinner</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="OMAD">OMAD</option>
+                          </select>
                         </div>
                       </div>
 
@@ -268,17 +301,33 @@
 
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="number" name="carbs" id="form-autocomplete" class="form-control mdb-autocomplete"
+                          <input type="number" name="fiber" id="form-autocomplete" class="form-control mdb-autocomplete"
                           required />
-                          <label for="form-autocomplete" class="">Carbs</label>
+                          <label for="form-autocomplete" class="">Fiber</label>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="number" name="netcarbs" id="form-autocomplete"
-                          class="form-control mdb-autocomplete" required />
-                          <label for="form-autocomplete" class="">Net Carbs</label>
+                          <input type="number" name="sugaralcohol" id="form-autocomplete" class="form-control mdb-autocomplete"
+                          required />
+                          <label for="form-autocomplete" class="">Sugar Alcohol</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="md-form mb-2">
+                          <input type="number" name="cupsofveggies" id="form-autocomplete" class="form-control mdb-autocomplete"
+                          required />
+                          <label for="form-autocomplete" class="">Cups of Veggies</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="md-form mb-2">
+                          <input type="number" name="carbs" id="form-autocomplete" class="form-control mdb-autocomplete"
+                          required />
+                          <label for="form-autocomplete" class="">Carbs</label>
                         </div>
                       </div>
 
@@ -300,9 +349,13 @@
 
                       <div class="col-md-6">
                         <div class="md-form mb-2">
-                          <input type="text" name="diet" id="form-autocomplete" class="form-control mdb-autocomplete"
-                          required />
-                          <label for="form-autocomplete" class="">Diet</label>
+                          <select class="mdb-select md-form" name="diet" required multiple>
+                            <option value="" disabled selected>Choose a Diet</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Pescatarian">Pescatarian</option>
+                            <option value="Vegan">Vegan</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                          </select>
                         </div>
                       </div>
 
@@ -351,22 +404,25 @@
 
   <script>
     $(document).ready(function () {
-      ClassicEditor.create(document.querySelector("#editor"))
-        .then((editor) => {
-          var editor1 = editor;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      $('.mdb-select').materialSelect();
 
-      var editor2 = null;
-      ClassicEditor.create(document.querySelector("#editeditor"))
-        .then((editor) => {
-          editor2 = editor;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      // ClassicEditor.create(document.querySelector("#editor"))
+      //   .then((editor) => {
+      //     var editor1 = editor;
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+
+      // var editor2 = null;
+      // ClassicEditor.create(document.querySelector("#editeditor"))
+      //   .then((editor) => {
+      //     editor2 = editor;
+      //   })
+      //   .catch((error) => {
+      //     console.error(error);
+      //   });
+
       $("td.createdAt").each(function (index, element) {
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
@@ -375,15 +431,17 @@
 
       $(".btn-edit").click(function (e) {
         e.preventDefault();
-        console.log(ClassicEditor.instances);
+        // console.log(ClassicEditor.instances);
 
         var eventId = $(this).attr("article-id");
         var eventrecipeId = $(this).attr("article-recipeID");
         var eventType = $(this).attr("article-type");
         var eventTitle = $(this).attr("article-title");
         var eventFats = $(this).attr("article-fats");
+        var eventFiber = $(this).attr("article-fiber");
+        var eventSugaralcohol = $(this).attr("article-sugaralcohol");
+        var eventCupsofveggies = $(this).attr("article-cupsofveggies");
         var eventCarbs = $(this).attr("article-carbs");
-        var eventNetCarbs = $(this).attr("article-netcarbs");
         var eventProteins = $(this).attr("article-proteins");
         var eventServings = $(this).attr("article-servings");
         var eventDiet = $(this).attr("article-diet");
@@ -398,13 +456,15 @@
         $('#modalupdateForm input[name="recipeID"]').val(eventrecipeId);
         $('#modalupdateForm input[name="name"]').val(eventTitle);
         $('#modalupdateForm input[name="unit"]').val(eventUnit);
-        $('#modalupdateForm input[name="type"]').val(eventType);
+        $('#modalupdateForm select[name="type"]').val(eventType.split(',')).trigger('change');
         $('#modalupdateForm input[name="fats"]').val(eventFats);
+        $('#modalupdateForm input[name="fiber"]').val(eventFiber);
+        $('#modalupdateForm input[name="sugaralcohol"]').val(eventSugaralcohol);
+        $('#modalupdateForm input[name="cupsofveggies"]').val(eventCupsofveggies);
         $('#modalupdateForm input[name="carbs"]').val(eventCarbs);
-        $('#modalupdateForm input[name="netcarbs"]').val(eventNetCarbs);
         $('#modalupdateForm input[name="proteins"]').val(eventProteins);
         $('#modalupdateForm input[name="servings"]').val(eventServings);
-        $('#modalupdateForm input[name="diet"]').val(eventDiet);
+        $('#modalupdateForm select[name="diet"]').val(eventDiet.split(',')).trigger('change');
         $('#modalupdateForm input[name="calories"]').val(eventCalories);
         $('#modalupdateForm img').attr('src', '/img/recipes/' + eventImage);
 

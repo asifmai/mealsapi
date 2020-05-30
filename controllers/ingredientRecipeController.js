@@ -18,8 +18,13 @@ module.exports.index_get = async (req, res) => {
       path: 'ingredient',
       model: 'Ingredient'
     }
-  }).sort({createdAt: "desc"});
-  const ingredients = await Ingredient.find().sort({createdAt: "desc"});
+  }).sort({
+    name: "asc"
+  });
+
+  const ingredients = await Ingredient.find().sort({
+    name: "asc"
+  });
 
   res.render("recipeingredient", {
     // recipes,
@@ -30,12 +35,17 @@ module.exports.index_get = async (req, res) => {
 };
 
 module.exports.deleterecipeingredient = async (req, res) => {
-  const {recId, ingId} = req.params;
+  const {
+    recId,
+    ingId
+  } = req.params;
   const recipe = await Recipe.findById(recId);
   let recipeIngredients = recipe.ingredients;
   recipeIngredients = recipeIngredients.filter(ri => ri.ingredient != ingId);
 
-  await Recipe.findByIdAndUpdate(recId, {ingredients: recipeIngredients});
+  await Recipe.findByIdAndUpdate(recId, {
+    ingredients: recipeIngredients
+  });
 
   res.redirect("/admin/recipeingredients");
 };
@@ -44,6 +54,7 @@ module.exports.addrecipeingredient = async (req, res) => {
   const {
     ingredientID,
     recipeID,
+    unitOfMeasure,
     amount
   } = req.body;
 
@@ -52,25 +63,41 @@ module.exports.addrecipeingredient = async (req, res) => {
 
   recipeIngredients.push({
     amount,
+    unitOfMeasure,
     ingredient: ingredientID,
   });
 
-  await Recipe.findByIdAndUpdate(recipeID, {ingredients: recipeIngredients});
+  await Recipe.findByIdAndUpdate(recipeID, {
+    ingredients: recipeIngredients
+  });
 
   res.redirect("/admin/recipeingredients");
 };
 
 module.exports.editrecipeingredient = async (req, res) => {
   const {
-    ingredientID,
-    recipeID,
+    recipeIdOld,
+    ingredientIdOld,
+    recipeId,
+    ingredientId,
+    unitOfMeasure,
     amount
   } = req.body;
 
-  await recipeIngredients.findByIdAndUpdate(req.body.id, {
-    ingredientID: ingredientID,
-    recipeID: recipeID,
-    amount: amount,
+  const recipe = await Recipe.findById(recipeIdOld);
+  const recipeIngredients = recipe.ingredients;
+
+  const recipeIngredientsNew = recipeIngredients.map(ri => {
+    if (ri.ingredient == ingredientIdOld) {
+      return {amount, unitOfMeasure, ingredient: ingredientIdOld}
+    } else {
+      return ri;
+    }
+  })
+  
+  await Recipe.findByIdAndUpdate(recipeIdOld, {
+    ingredients: recipeIngredientsNew
   });
-  res.redirect("/dashboard/recipeingredient");
+
+  res.redirect("/admin/recipeingredients");
 };

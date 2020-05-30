@@ -11,10 +11,10 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type: {
+  type: [{
     type: String,
     required: true,
-  },
+  }],
   fats: {
     type: Number,
     required: true,
@@ -27,7 +27,15 @@ const RecipeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  netcarbs: {
+  fiber: {
+    type: Number,
+    required: true,
+  },
+  sugaralcohol: {
+    type: Number,
+    required: true,
+  },
+  cupsofveggies: {
     type: Number,
     required: true,
   },
@@ -39,14 +47,15 @@ const RecipeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  diet: {
+  diet: [{
     type: String,
     required: true,
-  },
+  }],
   image: String,
   ingredients: [
     {
       amount: Number,
+      unitOfMeasure: String,
       ingredient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ingredient'
@@ -59,10 +68,13 @@ const RecipeSchema = new mongoose.Schema({
   },
 });
 
-
 // Virtuals
 RecipeSchema.virtual('imagePath').get(function() {
   return path.resolve(__dirname, `../public/img/recipes/${this.image}`);
+});
+
+RecipeSchema.virtual('netCarbs').get(function() {
+  return this.carbs - this.fiber - this.sugaralcohol;
 });
 
 // JSON

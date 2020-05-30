@@ -1,5 +1,7 @@
 module.exports.ensureAuthenticatedAdmin = (req, res, next) => {
-  // return next();
+  if (process.env.NODE_ENV == 'DEVELOPMENT') {
+    return next();
+  }
   if (req.isAuthenticated()) {
     if (req.user.role == 'admin') {
       return next();

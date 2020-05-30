@@ -4,7 +4,6 @@ const path = require('path');
 // Schema Setup
 const IngredientSchema = new mongoose.Schema({
   name: String,
-  unitofmeasure: String,
   image: String,
   createdAt: {
     type: Date,
