@@ -26,7 +26,7 @@
               <div class="card-body">
                 <!-- Table  -->
                 <div class="table-responsive text-nowrap">
-                  <table class="table table-hover">
+                  <table class="table table-hover" id="table-recipes">
                     <!-- <col width="5%" />
                     <col width="5%" />
                     <col width="15%" />
@@ -405,6 +405,9 @@
   <script>
     $(document).ready(function () {
       $('.mdb-select').materialSelect();
+      $('#table-recipes').DataTable({
+        "order": [[ 2, "asc" ]]
+      });
 
       // ClassicEditor.create(document.querySelector("#editor"))
       //   .then((editor) => {
