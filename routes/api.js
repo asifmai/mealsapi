@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const allowedUsers = require('../helpers/allowedusers');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const authMW = require('../middleware/authMw');
 const Recipe = require('../models/recipes');
+const MealPlan = require('../models/mealPlan');
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -37,7 +39,14 @@ router.post('/login', async (req, res, next) => {
       }
     };
 
-    const userDetails = await User.find({email}).select('-password -firstName -lastName')
+    const userDetails = await User.findOne({email}).select('-password -firstName -lastName');
+
+    // Create New Meal Plans
+    if (newUser == true) {
+      const currentDate = req.header('x-date');
+      await createNewMealPlansEntries(userDetails._id, currentDate);
+    }
+
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
@@ -55,7 +64,7 @@ router.post('/login', async (req, res, next) => {
     console.error(error.message);
     res.status(500).send('Server error');
   }
-})
+});
 
 const registerUser = async (email) => {
   try {
@@ -64,6 +73,24 @@ const registerUser = async (email) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
+  }
+}
+
+const createNewMealPlansEntries = async (userId, currentDate) => {
+  let daysArray = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const momentCurrentDate = moment(currentDate, 'MM/DD/YYYY');
+  const currentDay = momentCurrentDate.format('dddd').toLowerCase();
+  const currentDayIndex = daysArray.indexOf(currentDay);
+  daysArray = daysArray.slice(currentDayIndex, daysArray.length);
+  let dateToSave = momentCurrentDate.startOf('day').format();
+  for (let i = 0; i < daysArray.length; i++) {
+    if (i > 0) dateToSave = momentCurrentDate.add(i, 'days').startOf('day').format();
+    console.log(dateToSave)
+    const newMealPlan = new MealPlan({
+      userId: userId,
+      date: dateToSave,
+    });
+    await newMealPlan.save();
   }
 }
 

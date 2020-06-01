@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const MealPlanSchema = new mongoose.Schema({
-  user_id: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
   },
   recipes: [
