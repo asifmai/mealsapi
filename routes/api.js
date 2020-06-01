@@ -82,9 +82,8 @@ const createNewMealPlansEntries = async (userId, currentDate) => {
   const currentDay = momentCurrentDate.format('dddd').toLowerCase();
   const currentDayIndex = daysArray.indexOf(currentDay);
   daysArray = daysArray.slice(currentDayIndex, daysArray.length);
-  let dateToSave = momentCurrentDate.startOf('day').format();
   for (let i = 0; i < daysArray.length; i++) {
-    if (i > 0) dateToSave = momentCurrentDate.add(i, 'days').startOf('day').format();
+    const dateToSave = moment(currentDate, 'MM/DD/YYYY').add(i, 'days').startOf('day').format();
     console.log(dateToSave)
     const newMealPlan = new MealPlan({
       userId: userId,
