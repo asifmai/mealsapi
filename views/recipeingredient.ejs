@@ -27,15 +27,9 @@
                 <!-- Table  -->
                 <div class="table-responsive text-nowrap">
                   <table class="table table-hover" id="table-recipe-ingredients">
-                    <!-- <col width="5%" />
-                      <col width="5%" />
-                      <col width="15%" />
-                      <col width="10%" />
-                      <col width="40%" /> -->
                     <!-- Table head -->
                     <thead class="blue-grey lighten-4">
                       <tr>
-                        <!-- <th>S#</th> -->
                         <th>Recipe</th>
                         <th>Amount</th>
                         <th>Unit of Measure</th>
@@ -114,16 +108,9 @@
                   <div class="md-form mb-2">
                     <select class="browser-default custom-select" name="unitOfMeasure" required>
                       <option value="" disabled selected>Choose Unit of Measure</option>
-                      <option value="Cup">Cup</option>
-                      <option value="Extra Large">Extra Large</option>
-                      <option value="Large">Large</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Ounces">Ounces</option>
-                      <option value="Pint">Pint</option>
-                      <option value="Quart">Quart</option>
-                      <option value="Small">Small</option>
-                      <option value="Tablespoon">Tablespoon</option>
-                      <option value="Teaspoon">Teaspoon</option>
+                      <% for(var i=0; i< unitsofmeasure.length; i++) {%>
+                        <option value="<%= unitsofmeasure[i].name%>"><%= unitsofmeasure[i].name%></option>
+                      <% } %>
                     </select>
                   </div>
 
@@ -181,16 +168,9 @@
                   <div class="md-form mb-2">
                     <select class="browser-default custom-select" name="unitOfMeasure" required>
                       <option value="" disabled selected>Choose Unit of Measure</option>
-                      <option value="Cup">Cup</option>
-                      <option value="Extra Large">Extra Large</option>
-                      <option value="Large">Large</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Ounces">Ounces</option>
-                      <option value="Pint">Pint</option>
-                      <option value="Quart">Quart</option>
-                      <option value="Small">Small</option>
-                      <option value="Tablespoon">Tablespoon</option>
-                      <option value="Teaspoon">Teaspoon</option>
+                      <% for(var i=0; i< unitsofmeasure.length; i++) {%>
+                        <option value="<%= unitsofmeasure[i].name%>"><%= unitsofmeasure[i].name%></option>
+                      <% } %>
                     </select>
                   </div>
 

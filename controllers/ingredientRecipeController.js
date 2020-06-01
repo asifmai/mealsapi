@@ -1,6 +1,6 @@
-const recipeIngredients = require("../models/recipeingredients");
 const Recipe = require("../models/recipes");
 const Ingredient = require("../models/ingredients");
+const UnitOfMeasure = require('../models/unitsofmeasure');
 
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -10,8 +10,6 @@ cloudinary.config({
 });
 
 module.exports.index_get = async (req, res) => {
-  // let recipes = await recipeIngredients.find().populate('recipeId ingredientId').sort({ createdAt: "desc" });
-
   const recipes = await Recipe.find().populate({
     path: 'ingredients',
     populate: {
@@ -22,14 +20,13 @@ module.exports.index_get = async (req, res) => {
     name: "asc"
   });
 
-  const ingredients = await Ingredient.find().sort({
-    name: "asc"
-  });
+  const ingredients = await Ingredient.find().sort({name: "asc"});
+  const unitsofmeasure = await UnitOfMeasure.find().sort({name: 'asc'});
 
   res.render("recipeingredient", {
-    // recipes,
     recipes,
     ingredients,
+    unitsofmeasure,
     page: "recipeingredient",
   });
 };
@@ -89,12 +86,16 @@ module.exports.editrecipeingredient = async (req, res) => {
 
   const recipeIngredientsNew = recipeIngredients.map(ri => {
     if (ri.ingredient == ingredientIdOld) {
-      return {amount, unitOfMeasure, ingredient: ingredientIdOld}
+      return {
+        amount,
+        unitOfMeasure,
+        ingredient: ingredientIdOld
+      }
     } else {
       return ri;
     }
   })
-  
+
   await Recipe.findByIdAndUpdate(recipeIdOld, {
     ingredients: recipeIngredientsNew
   });

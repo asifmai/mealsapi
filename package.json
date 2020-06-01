@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/mealsapi",
-    "dev": "nodemon ./bin/mealsapi"
+    "dev": "nodemon ./bin/mealsapi",
+    "ship": "git add .&&git commit -m 'update'&&git push"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

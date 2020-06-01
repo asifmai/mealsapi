@@ -10,18 +10,24 @@ const MealPlanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  recepies: [
+  recipes: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Recipe',
-    },
+      type: String,
+      items: [
+        {
+          servings: Number,
+          recipe: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Recipe',
+          },
+        }
+      ]
+    }
   ],
   createdAt: {
     type: Date,
     default: new Date(),
   },
 });
-
-// Link with Recepie
 
 module.exports = mongoose.model("Mealplan", MealPlanSchema);

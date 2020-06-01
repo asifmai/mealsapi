@@ -5,6 +5,7 @@ const router = express.Router();
 const recipeController = require("../controllers/recipeController");
 const ingredientController = require("../controllers/ingredientController");
 const recipeIngredientsController = require("../controllers/ingredientRecipeController");
+const unitsOfMeasureController = require("../controllers/unitsOfMeasureController");
 
 const {
   ensureAuthenticatedAdmin
@@ -58,11 +59,16 @@ router.post("/addrecipeingredient", ensureAuthenticatedAdmin, recipeIngredientsC
 
 router.get("/deleterecipeingredient/:recId/:ingId", ensureAuthenticatedAdmin,recipeIngredientsController.deleterecipeingredient);
 
-router.post(
-  "/editrecipeingredient",
-  ensureAuthenticatedAdmin,
-  recipeIngredientsController.editrecipeingredient
-);
+router.post("/editrecipeingredient", ensureAuthenticatedAdmin, recipeIngredientsController.editrecipeingredient);
+
+// Units of Measure Routes
+router.get('/unitsofmeasure', ensureAuthenticatedAdmin, unitsOfMeasureController.index_get);
+
+router.post('/addunitofmeasure', ensureAuthenticatedAdmin, unitsOfMeasureController.addunitofmeasure_post);
+
+router.get('/deleteunitofmeasure/:id', ensureAuthenticatedAdmin, unitsOfMeasureController.deleteunitofmeasure_get);
+
+router.post('/editunitofmeasure', ensureAuthenticatedAdmin, unitsOfMeasureController.editunitofmeasure_post);
 
 // router.post("/sendmail", mailController.sendMail);
 
