@@ -148,7 +148,20 @@ router.get('/newmealplans', authMW, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const currentMealPlans = await MealPlan.find({userId: userId}).sort({date: 'desc'});
-    console.log(currentMealPlans)
+    
+    if (currentMealPlans.length == 0) {
+      return res.send('No Previous Meal Plans found for User...');
+    }
+
+    for (let i = 1; i <= 7; i++) {
+      const dateToSave = moment(currentMealPlans[0].date).add(i, 'days').format('MM/DD/YYYY');
+      console.log(dateToSave);
+      const newMealPlan = new MealPlan({
+        userId: userId,
+        date: dateToSave,
+      });
+      await newMealPlan.save();
+    }
 
     res.status(200).send('New Meal Plans Added...');
   } catch (error) {
