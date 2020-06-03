@@ -83,8 +83,8 @@ const createNewMealPlansEntries = async (userId, currentDate) => {
   const currentDayIndex = daysArray.indexOf(currentDay);
   daysArray = daysArray.slice(currentDayIndex, daysArray.length);
   for (let i = 0; i < daysArray.length; i++) {
-    const dateToSave = moment(currentDate, 'MM/DD/YYYY').add(i, 'days').startOf('day').format();
-    console.log(dateToSave)
+    const dateToSave = moment(currentDate, 'MM/DD/YYYY').add(i, 'days').format('MM/DD/YYYY');
+    console.log(dateToSave);
     const newMealPlan = new MealPlan({
       userId: userId,
       date: dateToSave,
@@ -92,6 +92,48 @@ const createNewMealPlansEntries = async (userId, currentDate) => {
     await newMealPlan.save();
   }
 }
+
+router.post('/mealplan', authMW, async (req, res, next) => {
+try {
+  const userId = req.user.id;
+  const mealPlan = req.body.mealPlan;
+
+  const mealPlanModified = {
+    userId, 
+    date: moment(mealPlan.date, 'MM DD YYYY').format('MM/DD/YYYY'),
+    recipes: mealPlan.recipes.map(rp => {
+      const recipe = {
+        type: rp.type,
+        items: rp.items.map(it => {
+          return {servings: it.servings, recipe: it._id}
+        })
+      };
+
+      return recipe;
+    }),
+  }
+
+  let foundMealPlan = await MealPlan.findOne({date: mealPlanModified.date});
+  if (foundMealPlan) {
+    await MealPlan.findOneAndUpdate({date: mealPlanModified.date}, mealPlanModified);
+    res.status(200).json({status: 'Update', foundMealPlan});
+  } else {
+    const newMealPlan = new MealPlan(mealPlanModified);
+    foundMealPlan = await newMealPlan.save();
+    res.status(200).json({status: 'Created', foundMealPlan});
+  }
+} catch (error) {
+  console.log(error.message);
+  res.send('Server Error...');
+}
+})
+
+router.get('/mealplans', authMW, async (req, res, next) => {
+  const userId = req.user.id;
+  const mealPlans = await MealPlan.find({userId}).sort({date: 'desc'});
+
+  res.status(200).json(mealPlans);
+})
 
 router.get('/me', authMW, async (req, res, next) => {
   try {
