@@ -147,7 +147,7 @@ router.get('/mealplans', authMW, async (req, res, next) => {
 router.get('/newmealplans', authMW, async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const currentMealPlans = await MealPlan.find({userId: userId}).sort(date: 'desc');
+    const currentMealPlans = await MealPlan.find({userId: userId}).sort({date: 'desc'});
     console.log(currentMealPlans)
 
     res.status(200).send('New Meal Plans Added...');
