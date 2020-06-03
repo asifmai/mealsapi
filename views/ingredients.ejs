@@ -241,6 +241,7 @@
         $('#modalupdateForm input[name="ingredientID"]').val(eventIngredientID);
         $('#modalupdateForm img').attr('src', '/img/ingredients/' + eventImage);
 
+        $('#modalupdateForm input').trigger('change');
         $('#modalupdateForm input[name="name"]').focus();
       });
 

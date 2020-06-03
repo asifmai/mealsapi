@@ -172,6 +172,7 @@
         var data_name = $(this).attr("data-name");
         $('#modalupdateForm input[name="id"]').val(data_id);
         $('#modalupdateForm input[name="name"]').val(data_name);
+        $('#modalupdateForm').trigger('change');
         $('#modalupdateForm input[name="name"]').focus();
       })
 
