@@ -104,7 +104,7 @@ try {
     date: moment(mealPlan.date, 'MM DD YYYY').format('YYYY-MM-DD'),
     recipes: mealPlan.recipes.map(rp => {
       const recipe = {
-        type: rp.type,
+        recipeType: rp.recipeType,
         items: rp.items.map(it => {
           return {servings: Number(it.servings), recipe: it._id}
         })
@@ -114,21 +114,14 @@ try {
     }),
   }
   
-  let foundMealPlan = await MealPlan.findOne({date: {$gte: moment(mealPlanModified.date).startOf('day'), $lte: moment(mealPlanModified.date).endOf('day')}, userId: mongoose.Types.ObjectId(userId)});
-  console.log(mealPlanModified.date, mongoose.Types.ObjectId(userId))
-  console.log(foundMealPlan)
+  let foundMealPlan = await MealPlan.findOne({date: {$gte: moment(mealPlanModified.date).startOf('day'), $lte: moment(mealPlanModified.date).endOf('day')}, userId: userId});
 
-  res.json(mealPlanModified);
-  // if (foundMealPlan) {
-  //   console.log('Updating...');
-  //   await MealPlan.findByIdAndUpdate(foundMealPlan._id, {recipes: mealPlanModified.recipes});
-  //   res.status(200).json({status: 'Update', foundMealPlan});
-  // } else {
-  //   console.log('New...');
-  //   const newMealPlan = new MealPlan(mealPlanModified);
-  //   foundMealPlan = await newMealPlan.save();
-  //   res.status(200).json({status: 'Created', foundMealPlan});
-  // }
+  if (foundMealPlan) {
+    const updatedMeal = await MealPlan.findByIdAndUpdate(foundMealPlan._id, {recipes: mealPlanModified.recipes});
+    res.status(200).json({status: 'Update', updatedMeal});
+  } else {
+    res.status(200).send('Meal Plan does not exist');
+  }
 } catch (error) {
   console.log(error.message);
   res.send('Server Error...');
@@ -137,7 +130,16 @@ try {
 
 router.get('/mealplans', authMW, async (req, res, next) => {
   const userId = req.user.id;
-  const mealPlans = await MealPlan.find({userId}).sort({date: 'desc'});
+  const mealPlans = await MealPlan.find({userId}).populate({
+    path: 'recipes',
+    populate: {
+      path: 'items',
+      populate: {
+        path: 'recipe',
+        model: 'Recipe',
+      }
+    }
+  });
 
   res.status(200).json(mealPlans);
 })
