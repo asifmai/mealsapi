@@ -145,8 +145,16 @@ router.get('/mealplans', authMW, async (req, res, next) => {
 })
 
 router.get('/newmealplans', authMW, async (req, res, next) => {
-  const userId = req.user._id;
-  console.log(userId);
+  try {
+    const userId = req.user._id;
+    const currentMealPlans = await MealPlan.find({userId: userId}).sort(date: 'desc');
+    console.log(currentMealPlans)
+
+    res.status(200).send('New Meal Plans Added...');
+  } catch (error) {
+    console.log(error);
+    res.send('Server Error...');
+  }
 })
 
 router.get('/me', authMW, async (req, res, next) => {
