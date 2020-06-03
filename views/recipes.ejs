@@ -432,11 +432,9 @@
       $('#table-recipes').DataTable({
         "order": [[ 1, "asc" ]]
       });
-
-      $(".btn-edit").click(function (e) {
+      
+      $(document).on('click', '.btn-edit', function (e) {
         e.preventDefault();
-        // console.log(ClassicEditor.instances);
-
         var eventId = $(this).attr("article-id");
         var eventrecipeId = $(this).attr("article-recipeID");
         var eventType = $(this).attr("article-type");
@@ -453,9 +451,6 @@
         var eventProteins = $(this).attr("article-proteins");
         var eventUnit = $(this).attr("article-unit");
         var eventImage = $(this).attr("article-image");
-
-        // INGREDIENTS var eventServings = $(this).attr('article-servings');
-
         $('#modalupdateForm input[name="id"]').val(eventId);
         $('#modalupdateForm input[name="recipeID"]').val(eventrecipeId);
         $('#modalupdateForm input[name="name"]').val(eventTitle);
@@ -471,15 +466,9 @@
         $('#modalupdateForm select[name="diet"]').val(eventDiet.split(',')).trigger('change');
         $('#modalupdateForm input[name="calories"]').val(eventCalories);
         $('#modalupdateForm img').attr('src', '/img/recipes/' + eventImage);
-
-        // editor2.data.set(eventType);
-
         $('#modalupdateForm input[name="name"]').focus();
-      });
-
-      $(".btn-edit").click(function () {
-        $("#modalupdateForm label").addClass("active");
-      });
+        $('#modalupdateForm input').trigger('change');
+      })
 
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();
@@ -499,36 +488,10 @@
           });
       });
     });
-    /*   var id=0;
-    $('#add').click(function () {
-    var table = $(this).closest('ul');
-    if (table.find('input:text').length < 7) {
-        id++
-        table.append(
-         id, '<li><div class="md-form mb-5"><input type="text"  name="ingredientname" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Name</label></div><div class="md-form mb-5"><input type="number"  name="amount" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Amount</label></div><div class="md-form mb-5"><input type="text"  name="unitofmeasure" id="form-autocomplete" class="form-control mdb-autocomplete" required><label for="form-autocomplete" class="">Unit of measure</label></div></li>');
-    }
-    });
-    
-    var array = [];
-    // $('#ingredients li').each(function(i, li) {
-    //   array.push($(li));
-      
-    // });
-    
-    $("#ul").each(function() { array.push($(this).text())}); 
-    alert(array[0])
-    var a = $('#ingredient').data('myval'); //getter
-    alert(a);
-    $('#mydiv').data('myval',20); //setter
-    alert($('#mydiv').data('myval'));
-
- */
-
  
- 
-$('input#image-upload-edit').change(function () {
-  readURL(this);
-})
+    $('input#image-upload-edit').change(function () {
+      readURL(this);
+    })
     function readURL(input) {
 
       if (input.files && input.files[0]) {

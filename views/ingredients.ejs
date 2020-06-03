@@ -183,7 +183,9 @@
                     </select>
                   </div>
 
-                  <img src="" alt="" class="img-fluid image-upload-edit">
+                  <div class="text-center">
+                    <img src="" alt="" class="img-fluid image-upload-edit">
+                  </div>
 
                   <div class="input-group my-3">
                     <div class="input-group-prepend">
@@ -225,7 +227,7 @@
         "order": [[ 1, "asc" ]]
       });
 
-      $(".btn-edit").click(function (e) {
+      $(document).on('click', '.btn-edit', function (e) {
         e.preventDefault();
         var eventId = $(this).attr("ingredient-id");
         var eventName = $(this).attr("ingredient-name");
@@ -240,10 +242,6 @@
         $('#modalupdateForm img').attr('src', '/img/ingredients/' + eventImage);
 
         $('#modalupdateForm input[name="name"]').focus();
-      });
-
-      $(".btn-edit").click(function () {
-        $("#modalupdateForm label").addClass("active");
       });
 
       $(".btn-delete").on("click", function (e) {

@@ -166,21 +166,14 @@
         "order": [[ 1, "asc" ]]
       });
 
-      $(".btn-edit").click(function (e) {
+      $(document).on('click', '.btn-edit', function (e) {
         e.preventDefault();
-
         var data_id = $(this).attr("data-id");
         var data_name = $(this).attr("data-name");
-
         $('#modalupdateForm input[name="id"]').val(data_id);
         $('#modalupdateForm input[name="name"]').val(data_name);
-
         $('#modalupdateForm input[name="name"]').focus();
-      });
-
-      $(".btn-edit").click(function () {
-        $("#modalupdateForm label").addClass("active");
-      });
+      })
 
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();

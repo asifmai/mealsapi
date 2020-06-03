@@ -206,26 +206,19 @@
 
       $('#table-recipe-ingredients').DataTable();
 
-      $(".btn-edit").click(function (e) {
+      $(document).on('click', '.btn-edit', function (e) {
         e.preventDefault();
-
         var recipeId = $(this).attr("data-recipeId");
         var ingredientId = $(this).attr("data-ingredientId");
         var amount = $(this).attr("data-amount");
         var unitOfMeasure = $(this).attr("data-unitofmeasure");
-        console.log(recipeId, ingredientId, amount)
-
         $('#modalupdateForm input[name="recipeIdOld"]').val(recipeId);
         $('#modalupdateForm input[name="ingredientIdOld"]').val(ingredientId);
         $('#modalupdateForm select[name="recipeId"]').val(recipeId).change();
         $('#modalupdateForm select[name="ingredientId"]').val(ingredientId).change();
         $('#modalupdateForm select[name="unitOfMeasure"]').val(unitOfMeasure).change();
         $('#modalupdateForm input[name="amount"]').val(amount);
-      });
-
-      $(".btn-edit").click(function () {
-        $("#modalupdateForm label").addClass("active");
-      });
+      })
 
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();
