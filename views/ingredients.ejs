@@ -39,6 +39,7 @@
                         <!-- <th>Ingredient ID</th> -->
                         <th>Image</th>
                         <th>Ingredient Name</th>
+                        <td>Category</td>
                         <th>Created Date</th>
                         <th class="text-center">Actions</th>
                       </tr>
@@ -55,12 +56,13 @@
                         </td>
                         <!-- <td><%= ingredients[i].ingredientID %></td> -->
                         <td><%= ingredients[i].name %></td>
+                        <td><%= ingredients[i].category %></td>
                         <td class="createdAt">
                           <%= ingredients[i].createdAt %>
                         </td>
                         <td class="text-center">
                           <a href="#" ingredient-name="<%= ingredients[i].name %>"
-                            ingredient-ingredientID="<%= ingredients[i].ingredientID %>"
+                            ingredient-ingredientID="<%= ingredients[i].ingredientID %>" ingredient-category="<%= ingredients[i].category %>"
                             ingredient-id="<%= ingredients[i]._id %>" ingredient-image="<%= ingredients[i].image %>"
                             class="btn btn-green btn-md waves-effect waves-light mr-3 btn-edit" data-toggle="modal"
                             data-target="#modalupdateForm"><i class="far fa-edit"></i></a>
@@ -95,10 +97,29 @@
                   </button>
                 </div>
                 <div class="modal-body">
+
                   <div class="md-form mb-2">
                     <input type="text" name="name" id="form-autocomplete" class="form-control mdb-autocomplete"
                       required />
                     <label for="form-autocomplete" class="">Ingredient Name</label>
+                  </div>
+
+                  <div class="md-form mb-2">
+                    <select class="browser-default custom-select" name="category" required>
+                      <option value="" disabled selected>Choose Category</option>
+                      <option value="Dairy Products">Dairy Products</option>
+                      <option value="Spices and Herbs">Spices and Herbs</option>
+                      <option value="Fats and Oils">Fats and Oils</option>
+                      <option value="Poultry Products">Poultry Products</option>
+                      <option value="Soups, Sauces, and Gravies">Soups, Sauces, and Gravies</option>
+                      <option value="Sausages and Luncheon Meats">Sausages and Luncheon Meats</option>
+                      <option value="Fruits">Fruits</option>
+                      <option value="Pork Products">Pork Products</option>
+                      <option value="Vegetables and Vegetable Products">Vegetables and Vegetable Products</option>
+                      <option value="Nut and Seed Products">Nut and Seed Products</option>
+                      <option value="Beef Products">Beef Products</option>
+                      <option value="Finfish and Shellfish Products">Finfish and Shellfish Products</option>
+                    </select>
                   </div>
 
                   <div class="input-group my-3">
@@ -142,6 +163,24 @@
                     <input type="text" name="name" id="form-autocomplete" class="form-control mdb-autocomplete"
                       required />
                     <label for="form-autocomplete" class="">Name</label>
+                  </div>
+
+                  <div class="md-form mb-2">
+                    <select class="browser-default custom-select" name="category" required>
+                      <option value="" disabled selected>Choose Category</option>
+                      <option value="Dairy Products">Dairy Products</option>
+                      <option value="Spices and Herbs">Spices and Herbs</option>
+                      <option value="Fats and Oils">Fats and Oils</option>
+                      <option value="Poultry Products">Poultry Products</option>
+                      <option value="Soups, Sauces, and Gravies">Soups, Sauces, and Gravies</option>
+                      <option value="Sausages and Luncheon Meats">Sausages and Luncheon Meats</option>
+                      <option value="Fruits">Fruits</option>
+                      <option value="Pork Products">Pork Products</option>
+                      <option value="Vegetables and Vegetable Products">Vegetables and Vegetable Products</option>
+                      <option value="Nut and Seed Products">Nut and Seed Products</option>
+                      <option value="Beef Products">Beef Products</option>
+                      <option value="Finfish and Shellfish Products">Finfish and Shellfish Products</option>
+                    </select>
                   </div>
 
                   <img src="" alt="" class="img-fluid image-upload-edit">
@@ -190,11 +229,13 @@
         e.preventDefault();
         var eventId = $(this).attr("ingredient-id");
         var eventName = $(this).attr("ingredient-name");
+        var eventCategory = $(this).attr("ingredient-category");
         var eventIngredientID = $(this).attr("ingredient-ingredientID");
         var eventImage = $(this).attr("ingredient-image");
 
         $('#modalupdateForm input[name="id"]').val(eventId);
         $('#modalupdateForm input[name="name"]').val(eventName);
+        $('#modalupdateForm select[name="category"]').val(eventCategory);
         $('#modalupdateForm input[name="ingredientID"]').val(eventIngredientID);
         $('#modalupdateForm img').attr('src', '/img/ingredients/' + eventImage);
 

@@ -41,6 +41,7 @@ module.exports.addingredient = async (req, res) => {
   
     const newSeat = new Ingredient({
       name: req.body.name,
+      category: req.body.category,
       image: fileName
     });
   
@@ -56,6 +57,7 @@ module.exports.addingredient = async (req, res) => {
 module.exports.editingredient = async (req, res) => {
   await Ingredient.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
+    category: req.body.category
   });
 
   if (req.files) {

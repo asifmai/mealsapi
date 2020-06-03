@@ -9,6 +9,7 @@ const IngredientSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  category: String,
 });
 
 // Virtuals
