@@ -144,6 +144,11 @@ router.get('/mealplans', authMW, async (req, res, next) => {
   res.status(200).json(mealPlans);
 })
 
+router.get('/newmealplans', authMW, async (req, res, next) => {
+  const userId = req.user._id;
+  console.log(userId);
+})
+
 router.get('/me', authMW, async (req, res, next) => {
   try {
     const user = await User.findOne({email: req.user.email}).populate('profile').exec();
