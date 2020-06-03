@@ -217,6 +217,7 @@
         $('#modalupdateForm select[name="recipeId"]').val(recipeId).change();
         $('#modalupdateForm select[name="ingredientId"]').val(ingredientId).change();
         $('#modalupdateForm select[name="unitOfMeasure"]').val(unitOfMeasure).change();
+        $('#modalupdateForm input').trigger('change');
         $('#modalupdateForm input[name="amount"]').val(amount);
       })
 

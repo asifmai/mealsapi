@@ -367,7 +367,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-6 text-center">
                         <img src="" alt="" class="img-fluid image-upload-edit">
                       </div>
 
@@ -406,23 +406,6 @@
     $(document).ready(function () {
       $('.mdb-select').materialSelect();
 
-      // ClassicEditor.create(document.querySelector("#editor"))
-      //   .then((editor) => {
-      //     var editor1 = editor;
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-
-      // var editor2 = null;
-      // ClassicEditor.create(document.querySelector("#editeditor"))
-      //   .then((editor) => {
-      //     editor2 = editor;
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-
       $("td.createdAt").each(function (index, element) {
         var dt = $(element).text();
         var newdt = moment(dt).format("MM-DD-YY HH:mm");
@@ -432,7 +415,7 @@
       $('#table-recipes').DataTable({
         "order": [[ 1, "asc" ]]
       });
-      
+
       $(document).on('click', '.btn-edit', function (e) {
         e.preventDefault();
         var eventId = $(this).attr("article-id");
