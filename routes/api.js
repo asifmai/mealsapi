@@ -138,8 +138,11 @@ router.get('/mealplans', authMW, async (req, res, next) => {
         path: 'recipe',
         model: 'Recipe',
         populate: {
-          path: 'recipe',
-          model: 'Recipe'
+          path: 'ingredients',
+          populate: {
+            path: 'ingredient',
+            model: 'Ingredient'
+          }
         }
       }
     }
