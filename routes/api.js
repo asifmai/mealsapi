@@ -204,17 +204,23 @@ router.post('/profile', authMW, async (req, res, next) => {
       dessert,
       prefferedMeals,
     } = req.body;
+    const typeOfMeals = req.body.typeOfMeals ? req.body.typeOfMeals : undefined;
 
     // if (req.body.profileId) {
 
     // } else {
       
     // }
-
-
-    const newProfile = new Profile({
-      name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins, bread, dessert, prefferedMeals
-    });
+    let newProfile;
+    if (typeOfMeals) {
+      newProfile = new Profile({
+        name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins, bread, dessert, prefferedMeals, typeOfMeals
+      });
+    } else {
+      newProfile = new Profile({
+        name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins, bread, dessert, prefferedMeals
+      });
+    }
     
     await newProfile.save();
     await User.findByIdAndUpdate(req.user.id, {profile: newProfile.id});

@@ -14,6 +14,7 @@ const ProfileSchema = new mongoose.Schema({
   bread: Boolean,
   dessert: Boolean,
   prefferedMeals: [{type: String}],
+  typeOfMeals: [{type: String}],
 })
 
 module.exports = mongoose.model('Profile', ProfileSchema);
