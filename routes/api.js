@@ -199,7 +199,10 @@ router.post('/profile', authMW, async (req, res, next) => {
       calories,
       carbs,
       fats,
-      proteins
+      proteins,
+      bread,
+      dessert,
+      prefferedMeals,
     } = req.body;
 
     // if (req.body.profileId) {
@@ -210,8 +213,9 @@ router.post('/profile', authMW, async (req, res, next) => {
 
 
     const newProfile = new Profile({
-      name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins
-    })
+      name, height, weight, age, activityLevel, noOfMeals, calories, carbs, fats, proteins, bread, dessert, prefferedMeals
+    });
+    
     await newProfile.save();
     await User.findByIdAndUpdate(req.user.id, {profile: newProfile.id});
     res.status(200).send('Profile added...');
